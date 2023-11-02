@@ -1,9 +1,9 @@
 // Function to make the API request with the token
 async function getUserWithToken() {
-  const token = getTokenFromCookies('user_token'); // Get the token from cookies
+  const token = getTokenFromCookies('user_token'); // Get the token dari cookies via parameter
 
   if (!token) {
-    alert("Token not found in cookies. Please log in to get a token.");
+    alert("token tidak ditemukan");
     return;
   }
 
@@ -99,5 +99,4 @@ function displayUserData(userData) {
   }
 }
 
-// Automatically fetch user data when the page loads
 getUserWithToken();
