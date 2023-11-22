@@ -1,5 +1,5 @@
 function checkLoginStatus() {
-  const token = getTokenFromCookies('user_token'); // Ganti 'user_token' dengan nama cookie yang sesuai
+  const token = getTokenFromCookies('Login'); // Ganti 'user_token' dengan nama cookie yang sesuai
 
   if (token) {
       // Jika ada token, pengguna sudah login. Tampilkan tombol Logout.
