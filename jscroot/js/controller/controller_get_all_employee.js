@@ -24,7 +24,7 @@ async function getUserWithToken() {
     const data = await response.json();
 
     if (data.status === true) {
-      displayUserData(data.data);
+      displayEmployeeData(data.data);
     } else {
       alert(data.message);
     }
@@ -46,11 +46,11 @@ function getTokenFromCookies(cookieName) {
 }
 
 // Function to display user data in the table
-function displayUserData(userData) {
-  const userDataBody = document.getElementById('userDataBody');
+function displayEmployeeData(EmployeeData) {
+  const EmployeeDataBody = document.getElementById('EmployeeDataBody');
 
-  if (userData && userData.length > 0) {
-    userData.forEach(user => {
+  if (EmployeeData && EmployeeData.length > 0) {
+    EmployeeData.forEach(emp => {
       const newRow = document.createElement('tr');
       newRow.innerHTML = `
       <td
@@ -62,9 +62,9 @@ function displayUserData(userData) {
             alt="user1" />
         </div>
         <div class="flex flex-col justify-center">
-          <h6 class="mb-0 text-sm leading-normal dark:text-white">${user.username}</h6>
+          <h6 class="mb-0 text-sm leading-normal dark:text-white">${emp.employeeid}</h6>
           <p class="mb-0 text-xs leading-tight dark:text-white dark:opacity-80 text-slate-400">
-          ${user.password}</p>
+          ${emp.name}</p>
         </div>
       </div>
     </td>
@@ -92,10 +92,10 @@ function displayUserData(userData) {
     </td>
   </tr>
       `;
-      userDataBody.appendChild(newRow);
+      EmployeeDataBody.appendChild(newRow);
     });
   } else {
-    userDataBody.innerHTML = '<tr><td colspan="3">No user data found.</td></tr>';
+    EmployeeDataBody.innerHTML = '<tr><td colspan="3">No user data found.</td></tr>';
   }
 }
 
