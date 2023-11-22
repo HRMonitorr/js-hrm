@@ -48,7 +48,6 @@ export function AlertPost(value){
 
 function ResponsePostLogin(response) {
   if (response && response.token) {
-    console.log('Token User:', response.token);
     setCookieWithExpireHour('Login', response.token, 2);
     window.location.href = 'https://hrmonitorr.github.io/dashboard/build/pages/dashboard.html';
     alert("Selamat Datang")
