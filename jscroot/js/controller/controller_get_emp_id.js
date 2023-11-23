@@ -7,7 +7,7 @@ async function getAllEmployees() {
     return;
   }
 
-  const allEmployeesURL = 'https://asia-southeast2-gis-project-401902.cloudfunctions.net/get-all-employee';
+  const allEmployeesURL = 'https://asia-southeast2-gis-project-401902.cloudfunctions.net/one-employee';
 
   const requestOptions = {
     method: 'GET',
