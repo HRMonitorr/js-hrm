@@ -1,5 +1,5 @@
 // Function to make the API request with the token
-async function getOneEmployeeWithToken(employeeId) {
+async function getEmployeeDetailsForLoggedInUser() {
   const token = getTokenFromCookies('Login');
 
   if (!token) {
@@ -20,8 +20,8 @@ async function getOneEmployeeWithToken(employeeId) {
   };
 
   try {
-    // Make GET request to one-employee endpoint by employee ID
-    const response = await fetch(`${oneEmployeeURL}?employeeid=${employeeId}`, requestOptions);
+    // Make a GET request to the one-employee endpoint without specifying the employee ID
+    const response = await fetch(oneEmployeeURL, requestOptions);
     const data = await response.json();
 
     if (data.status === 200) {
@@ -73,6 +73,5 @@ function displayEmployeeDetails(employeeData) {
   }
 }
 
-// Example usage: Provide the actual employee ID you want to retrieve
-const employeeIdToRetrieve = "123"; // Replace with the actual employee ID
-getOneEmployeeWithToken(employeeIdToRetrieve);
+// Example usage: No need to provide an employee ID, it will be obtained from the token
+getEmployeeDetailsForLoggedInUser();
