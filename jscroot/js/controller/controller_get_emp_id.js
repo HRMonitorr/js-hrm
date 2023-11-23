@@ -16,7 +16,8 @@ async function getEmployeeDetailsForLoggedInUser() {
   const requestOptions = {
     method: 'GET',
     headers: myHeaders,
-    redirect: 'follow'
+    redirect: 'follow',
+    employeeid: 'string'
   };
 
   try {
