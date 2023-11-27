@@ -42,7 +42,7 @@ export function PostLogin() {
 
 export function AlertPost(value){
     alert(value.message + "\nRegistrasi Berhasil")
-    window.location.href= "login.html"
+    window.location.href= "https://hrmonitor.advocata.me/dashboard/build/pages/sign-in.html"
 }
 
 

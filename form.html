@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee Search</title>
+</head>
+<body>
+
+<form id="searchForm">
+  <label for="employeeIdInput">Employee ID:</label>
+  <input type="text" id="employeeIdInput" name="employeeIdInput">
+  <button type="button" id="searchButton">Search</button>
+</form>
+
+<table>
+  <thead>
+    <tr>
+      <th>Employee ID</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Role</th>
+      <th>Username</th>
+      <th>Basic Salary</th>
+      <th>Honor Division</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody id="searchResultsBody">
+  </tbody>
+</table>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  async function searchEmployee() {
+    const employeeIdInput = document.getElementById('employeeIdInput').value;
+
+    if (!employeeIdInput) {
+      alert("Please enter Employee ID");
+      return;
+    }
+
+    const token = getTokenFromCookies('Login');
+
+    if (!token) {
+      alert("You are not logged in");
+      return;
+    }
+
+    const targetURL = 'https://asia-southeast2-gis-project-401902.cloudfunctions.net/one-employee';
+
+    const myHeaders = new Headers();
+    myHeaders.append('Login', token);
+
+    const requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: JSON.stringify({ employeeid: employeeIdInput }),
+      redirect: 'follow'
+    };
+
+    try {
+      const response = await fetch(targetURL, requestOptions);
+      const data = await response.json();
+
+      const searchResultsBody = document.getElementById('searchResultsBody');
+
+      searchResultsBody.innerHTML = '';
+
+      if (data.status === 200) {
+        displayEmployeeData([data.data], 'searchResultsBody');
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+
+  function editEmployee(employeeId) {
+    window.location.href = `update_form.html?employeeid=${employeeId}`;
+  }
+
+  function displayEmployeeData(employeeData, tableBodyId) {
+    const tableBody = document.getElementById(tableBodyId);
+
+    if (employeeData && employeeData.length > 0) {
+      employeeData.forEach(emp => {
+        const newRow = document.createElement('tr');
+        newRow.innerHTML = `
+          <td>${emp.employeeid}</td>
+          <td>${emp.name}</td>
+          <td>${emp.email}</td>
+          <td>${emp.phone}</td>
+          <td>${emp.account['role']}</td>
+          <td>${emp.account['username']}</td>
+          <td>${emp.salary['basic-salary']}</td>
+          <td>${emp.salary['honor-division']}</td>
+          <td><button type="button" onclick="editEmployee('${emp.employeeid}')">Edit</button></td>
+        `;
+        tableBody.appendChild(newRow);
+      });
+    } else {
+      tableBody.innerHTML = `<tr><td colspan="9">No user data found.</td></tr>`;
+    }
+  }
+
+  document.getElementById('searchButton').addEventListener('click', searchEmployee);
+});
+</script>
+
+</body>
+</html>
