@@ -1,60 +1,41 @@
-<!-- index.html -->
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Employee Data</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
-
-    th, td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      text-align: left;
-    }
-
-    th {
-      background-color: #f2f2f2;
-    }
-
-    input, button {
-      margin-bottom: 10px;
-    }
-  </style>
+  <title>Employee Management</title>
 </head>
+
 <body>
 
-  <input type="text" id="employeeIdInput" placeholder="Enter Employee ID">
+  <h2>Employee Search</h2>
+  <label for="employeeIdInput">Employee ID:</label>
+  <input type="text" id="employeeIdInput">
   <button id="searchButton">Search</button>
 
-  <table>
+  <h2>Employee Data</h2>
+  <table border="1">
     <thead>
       <tr>
         <th>Employee ID</th>
         <th>Name</th>
         <th>Email</th>
         <th>Phone</th>
-        <th>Role</th>
+        <th>Division</th>
         <th>Username</th>
+        <th>Password</th>
         <th>Basic Salary</th>
         <th>Honor Division</th>
-        <th>Action</th>
+        <th>Actions</th>
       </tr>
     </thead>
-    <tbody id="EmployeeDataBody"></tbody>
+    <tbody id="EmployeeDataBody">
+      <!-- Employee data will be displayed here -->
+    </tbody>
   </table>
 
-  <script type="module" src="/jscroot/js/controller/controller_getemployee.js"></script>
+  <script src="/jscroot/js/controller/controller_employee.js"></script>
 </body>
+
 </html>
