@@ -49,7 +49,7 @@ async function deleteUser(username) {
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Login', token);
 
-  const requestBody = JSON.stringify({ "Username": username });
+  const requestBody = JSON.stringify({ "username": username });
 
   const requestOptions = {
     method: 'DELETE', // Use DELETE method for deletion
