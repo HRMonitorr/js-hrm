@@ -140,6 +140,7 @@ const displayEmployeeData = (employeeData, tableBodyId) => {
     employeeData.forEach(emp => {
       const newRow = document.createElement('tr');
       newRow.innerHTML = `
+      <tr class="text-gray-700 dark:text-gray-400">
       <td class="px-4 py-3">
       <div class="flex items-center text-sm">
         <div>
@@ -148,7 +149,7 @@ const displayEmployeeData = (employeeData, tableBodyId) => {
       </div>
     </td>
     <td class="px-4 py-3 text-sm">
-      <p class="font-semibold">>${emp.name}</p>
+      <p class="font-semibold">${emp.name}</p>
     </td>
     <td class="px-4 py-3 text-sm">
       <p class="font-semibold">${emp.email}</p>
@@ -190,6 +191,8 @@ const displayEmployeeData = (employeeData, tableBodyId) => {
         </a>
       </div>
     </td>
+    </tr>
+
       `;
       employeeDataBody.appendChild(newRow);
     });
