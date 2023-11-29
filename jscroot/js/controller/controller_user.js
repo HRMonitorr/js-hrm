@@ -3,7 +3,7 @@ async function getUserWithToken() {
   const token = getTokenFromCookies('Login'); // Get the token dari cookies via parameter
 
   if (!token) {
-    alert("Token tidak ditemukan");
+    alert("token tidak ditemukan");
     return;
   }
 
@@ -33,47 +33,6 @@ async function getUserWithToken() {
   }
 }
 
-// Function to delete user by username
-async function deleteUser(username) {
-  const token = getTokenFromCookies('Login'); // Get the token dari cookies via parameter
-
-  if (!token) {
-    alert("Token tidak ditemukan");
-    return;
-  }
-
-  const deleteURL = 'https://asia-southeast2-gis-project-401902.cloudfunctions.net/deleteuser';
-
-  // Set up headers with the token
-  const myHeaders = new Headers();
-  myHeaders.append('Content-Type', 'application/json');
-  myHeaders.append('Login', token);
-
-  const requestBody = JSON.stringify({ "username": username });
-
-  const requestOptions = {
-    method: 'DELETE', // Use DELETE method for deletion
-    headers: myHeaders,
-    body: requestBody,
-    redirect: 'follow'
-  };
-
-  try {
-    const response = await fetch(deleteURL, requestOptions);
-    const data = await response.json();
-
-    if (data.status === true) {
-      alert('User deleted successfully.');
-      // You may want to refresh the user data after deletion
-      getUserWithToken();
-    } else {
-      alert(data.message);
-    }
-  } catch (error) {
-    console.error('Error:', error);
-  }
-}
-
 // Function to extract the token from cookies
 function getTokenFromCookies(cookieName) {
   const cookies = document.cookie.split(';');
@@ -91,8 +50,6 @@ function displayUserData(userData) {
   const userDataBody = document.getElementById('userDataBody');
 
   if (userData && userData.length > 0) {
-    userDataBody.innerHTML = '';
-
     userData.forEach(user => {
       const newRow = document.createElement('tr');
       newRow.innerHTML = `
@@ -107,27 +64,51 @@ function displayUserData(userData) {
           <p class="font-semibold">${user.password}</p>
         </td>
         <td class="px-4 py-3">
-          <button class="delete-link" data-username="${user.username}">Delete</button>
+          <a href="#" class="delete-link" data-employeeid="${user.username}">Delete</a>
         </td>
       `;
       userDataBody.appendChild(newRow);
-    });
 
-    // Add event listener to each delete button
-    const deleteButtons = document.querySelectorAll('.delete-link');
-    deleteButtons.forEach(button => {
-      button.addEventListener('click', () => handleDeleteButtonClick(button));
+      // Add event listener for delete link
+      const deleteLink = newRow.querySelector('.delete-link');
+      deleteLink.addEventListener('click', (event) => {
+        event.preventDefault();
+        const usernameToDelete = event.target.getAttribute('data-employeeid');
+        deleteUser(usernameToDelete);
+      });
     });
   } else {
     userDataBody.innerHTML = '<tr><td colspan="3">No user data found.</td></tr>';
   }
 }
 
-// Event handler for "Delete" button click
-function handleDeleteButtonClick(button) {
-  const username = button.dataset.username;
-  if (username) {
-    deleteUser(username);
+// Function to delete user by username
+async function deleteUser(usernameToDelete) {
+  const deleteApiUrl = 'https://asia-southeast2-gis-project-401902.cloudfunctions.net/deleteuser';
+
+  const deleteRequestOptions = {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      Username: usernameToDelete,
+    }),
+  };
+
+  try {
+    const response = await fetch(deleteApiUrl, deleteRequestOptions);
+    const data = await response.json();
+
+    if (data.status === true) {
+      alert('User deleted successfully.');
+      // Reload the user data after deletion
+      getUserWithToken();
+    } else {
+      alert(data.message);
+    }
+  } catch (error) {
+    console.error('Error:', error);
   }
 }
 
