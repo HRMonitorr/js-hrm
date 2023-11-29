@@ -91,6 +91,8 @@ function displayUserData(userData) {
   const userDataBody = document.getElementById('userDataBody');
 
   if (userData && userData.length > 0) {
+    userDataBody.innerHTML = '';
+
     userData.forEach(user => {
       const newRow = document.createElement('tr');
       newRow.innerHTML = `
@@ -105,13 +107,27 @@ function displayUserData(userData) {
           <p class="font-semibold">${user.password}</p>
         </td>
         <td class="px-4 py-3">
-          <button onclick="deleteUser('${user.username}')" class="delete-link">Delete</button>
+          <button class="delete-link" data-username="${user.username}">Delete</button>
         </td>
       `;
       userDataBody.appendChild(newRow);
     });
+
+    // Add event listener to each delete button
+    const deleteButtons = document.querySelectorAll('.delete-link');
+    deleteButtons.forEach(button => {
+      button.addEventListener('click', () => handleDeleteButtonClick(button));
+    });
   } else {
     userDataBody.innerHTML = '<tr><td colspan="3">No user data found.</td></tr>';
+  }
+}
+
+// Event handler for "Delete" button click
+function handleDeleteButtonClick(button) {
+  const username = button.dataset.username;
+  if (username) {
+    deleteUser(username);
   }
 }
 
