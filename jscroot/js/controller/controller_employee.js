@@ -140,6 +140,7 @@ const displayEmployeeData = (employeeData, tableBodyId) => {
     employeeData.forEach(emp => {
       const newRow = document.createElement('tr');
       newRow.innerHTML = `
+      <tr class="text-gray-700 dark:text-gray-400">
       <td class="px-4 py-3">
       <div class="flex items-center text-sm">
         <div>
@@ -169,17 +170,12 @@ const displayEmployeeData = (employeeData, tableBodyId) => {
       ${emp.salary['honor-division']}
     </td>
     <td class="px-4 py-3">
-  <div class="flex items-center space-x-4 text-sm">
-    <a href="javascript:;" onclick="editEmployee('${emp.employeeid}')"
-      class="text-purple-600 hover:text-purple-800 cursor-pointer focus:outline-none focus:shadow-outline-purple">
-      Edit
-    </a>
-    <a href="javascript:;" onclick="deleteEmployeeHandler('${emp.employeeid}')"
-      class="text-red-600 hover:text-red-800 cursor-pointer focus:outline-none focus:shadow-outline-red">
-      Delete
-    </a>
-  </div>
+    <a href="javascript:;" onclick="editEmployee('${emp.employeeid}')">Edit</a>
+    <a href="javascript:;" onclick="deleteEmployeeHandler('${emp.employeeid}')">Delete</a>
 </td>
+
+    </tr>
+
       `;
       employeeDataBody.appendChild(newRow);
     });
