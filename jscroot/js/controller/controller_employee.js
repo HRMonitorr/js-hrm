@@ -120,7 +120,7 @@ const deleteEmployee = async (employeeId) => {
 };
 
 const editEmployee = (employeeId) => {
-  window.location.href = `update.html?employeeid=${employeeId}`;
+  window.location.href = `formsupdate.html?employeeid=${employeeId}`;
 };
 
 document.getElementById('searchButton').addEventListener('click', searchEmployee);
