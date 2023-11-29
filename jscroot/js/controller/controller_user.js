@@ -53,21 +53,62 @@ function displayUserData(userData) {
     userData.forEach(user => {
       const newRow = document.createElement('tr');
       newRow.innerHTML = `
-      <td class="px-4 py-3">
-      <div class="flex items-center text-sm">
-        <div>
-          <p class="font-semibold">${user.username}</p>
-        </div>
-      </div>
-    </td>
-    <td class="px-4 py-3 text-sm">
-      <p class="font-semibold">${user.password}</p>
-    </td>
+        <td class="px-4 py-3">
+          <div class="flex items-center text-sm">
+            <div>
+              <p class="font-semibold">${user.username}</p>
+            </div>
+          </div>
+        </td>
+        <td class="px-4 py-3 text-sm">
+          <p class="font-semibold">${user.password}</p>
+        </td>
+        <td class="px-4 py-3">
+          <a href="#" class="delete-link" data-employeeid="${user.username}">Delete</a>
+        </td>
       `;
       userDataBody.appendChild(newRow);
+
+      // Add event listener for delete link
+      const deleteLink = newRow.querySelector('.delete-link');
+      deleteLink.addEventListener('click', (event) => {
+        event.preventDefault();
+        const usernameToDelete = event.target.getAttribute('data-employeeid');
+        deleteUser(usernameToDelete);
+      });
     });
   } else {
     userDataBody.innerHTML = '<tr><td colspan="3">No user data found.</td></tr>';
+  }
+}
+
+// Function to delete user by username
+async function deleteUser(usernameToDelete) {
+  const deleteApiUrl = 'https://asia-southeast2-gis-project-401902.cloudfunctions.net/deleteuser';
+
+  const deleteRequestOptions = {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      Username: usernameToDelete,
+    }),
+  };
+
+  try {
+    const response = await fetch(deleteApiUrl, deleteRequestOptions);
+    const data = await response.json();
+
+    if (data.status === true) {
+      alert('User deleted successfully.');
+      // Reload the user data after deletion
+      getUserWithToken();
+    } else {
+      alert(data.message);
+    }
+  } catch (error) {
+    console.error('Error:', error);
   }
 }
 
