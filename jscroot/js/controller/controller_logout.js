@@ -3,7 +3,7 @@ import { deleteCookie } from 'https://jscroot.github.io/cookie/croot.js';
 function logout() {
 
   deleteCookie('Login');
-  window.location.href = '../pages/sign-in.html';
+  window.location.href = 'https://hrmonitor.advocata.me/dashboard/public/pages/login.html';
 }
 
 
