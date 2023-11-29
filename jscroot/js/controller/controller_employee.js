@@ -125,6 +125,17 @@ const editEmployee = (employeeId) => {
 
 document.getElementById('searchButton').addEventListener('click', searchEmployee);
 
+document.getElementById('EmployeeDataBody').addEventListener('click', (event) => {
+  const target = event.target;
+  if (target.classList.contains('edit-link')) {
+    const employeeId = target.getAttribute('data-employeeid');
+    editEmployee(employeeId);
+  } else if (target.classList.contains('delete-link')) {
+    const employeeId = target.getAttribute('data-employeeid');
+    deleteEmployeeHandler(employeeId);
+  }
+});
+
 const deleteEmployeeHandler = (employeeId) => {
   if (confirm("Are you sure you want to delete this employee?")) {
     deleteEmployee(employeeId);
@@ -140,7 +151,6 @@ const displayEmployeeData = (employeeData, tableBodyId) => {
     employeeData.forEach(emp => {
       const newRow = document.createElement('tr');
       newRow.innerHTML = `
-      <tr class="text-gray-700 dark:text-gray-400">
       <td class="px-4 py-3">
       <div class="flex items-center text-sm">
         <div>
@@ -169,14 +179,12 @@ const displayEmployeeData = (employeeData, tableBodyId) => {
     <td class="px-4 py-3 text-sm">
       ${emp.salary['honor-division']}
     </td>
-    <td class="px-4 py-3">
-    <a href="javascript:;" onclick="editEmployee('${emp.employeeid}')">Edit</a>
-    <a href="javascript:;" onclick="deleteEmployeeHandler('${emp.employeeid}')">Delete</a>
-</td>
-
-    </tr>
-
+        <td class="px-4 py-3">
+          <a href="#" class="edit-link" data-employeeid="${emp.employeeid}">Edit</a>
+          <a href="#" class="delete-link" data-employeeid="${emp.employeeid}">Delete</a>
+        </td>
       `;
+
       employeeDataBody.appendChild(newRow);
     });
   } else {
