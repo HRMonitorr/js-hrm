@@ -53,44 +53,16 @@ function displayUserData(userData) {
     userData.forEach(user => {
       const newRow = document.createElement('tr');
       newRow.innerHTML = `
-      <td
-      class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-      <div class="flex px-2 py-1">
+      <td class="px-4 py-3">
+      <div class="flex items-center text-sm">
         <div>
-          <img src="../assets/img/team-2.jpg"
-            class="inline-flex items-center justify-center mr-4 text-sm text-white transition-all duration-200 ease-in-out h-9 w-9 rounded-xl"
-            alt="user1" />
-        </div>
-        <div class="flex flex-col justify-center">
-          <h6 class="mb-0 text-sm leading-normal dark:text-white">${user.username}</h6>
-          <p class="mb-0 text-xs leading-tight dark:text-white dark:opacity-80 text-slate-400">
-          ${user.password}</p>
+          <p class="font-semibold">${user.username}</p>
         </div>
       </div>
     </td>
-    <td
-      class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-      <p class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-80">Manager</p>
-      <p class="mb-0 text-xs leading-tight dark:text-white dark:opacity-80 text-slate-400">
-        Organization</p>
+    <td class="px-4 py-3 text-sm">
+      <p class="font-semibold">${user.password}</p>
     </td>
-    <td
-      class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-      <span
-        class="bg-gradient-to-tl from-emerald-500 to-teal-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white">${user.role}</span>
-    </td>
-    <td
-      class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-      <span
-        class="text-xs font-semibold leading-tight dark:text-white dark:opacity-80 text-slate-400">23/04/18</span>
-    </td>
-    <td
-      class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-      <a href="javascript:;"
-        class="text-xs font-semibold leading-tight dark:text-white dark:opacity-80 text-slate-400">
-        Edit </a>
-    </td>
-  </tr>
       `;
       userDataBody.appendChild(newRow);
     });
