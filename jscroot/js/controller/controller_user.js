@@ -3,7 +3,7 @@ async function getUserWithToken() {
   const token = getTokenFromCookies('Login'); // Get the token dari cookies via parameter
 
   if (!token) {
-    alert("token tidak ditemukan");
+    alert("Token tidak ditemukan");
     return;
   }
 
@@ -38,7 +38,7 @@ async function deleteUser(username) {
   const token = getTokenFromCookies('Login'); // Get the token dari cookies via parameter
 
   if (!token) {
-    alert("token tidak ditemukan");
+    alert("Token tidak ditemukan");
     return;
   }
 
@@ -52,7 +52,7 @@ async function deleteUser(username) {
   const requestBody = JSON.stringify({ "Username": username });
 
   const requestOptions = {
-    method: 'POST',
+    method: 'DELETE', // Use DELETE method for deletion
     headers: myHeaders,
     body: requestBody,
     redirect: 'follow'
@@ -90,8 +90,6 @@ function getTokenFromCookies(cookieName) {
 function displayUserData(userData) {
   const userDataBody = document.getElementById('userDataBody');
 
-  userDataBody.innerHTML = ''; // Clear the table body before updating
-
   if (userData && userData.length > 0) {
     userData.forEach(user => {
       const newRow = document.createElement('tr');
@@ -107,22 +105,10 @@ function displayUserData(userData) {
           <p class="font-semibold">${user.password}</p>
         </td>
         <td class="px-4 py-3">
-          <a href="#" class="delete-link" data-username="${user.username}">Delete</a>
+          <button onclick="deleteUser('${user.username}')" class="delete-link">Delete</button>
         </td>
       `;
       userDataBody.appendChild(newRow);
-    });
-
-    // Add event listener to delete links
-    const deleteLinks = document.querySelectorAll('.delete-link');
-    deleteLinks.forEach(link => {
-      link.addEventListener('click', (event) => {
-        event.preventDefault();
-        const username = link.getAttribute('data-username');
-        if (confirm(`Are you sure you want to delete the user ${username}?`)) {
-          deleteUser(username);
-        }
-      });
     });
   } else {
     userDataBody.innerHTML = '<tr><td colspan="3">No user data found.</td></tr>';
