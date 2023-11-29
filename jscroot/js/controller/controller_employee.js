@@ -151,6 +151,7 @@ const displayEmployeeData = (employeeData, tableBodyId) => {
     employeeData.forEach(emp => {
       const newRow = document.createElement('tr');
       newRow.innerHTML = `
+      
       <td class="px-4 py-3">
       <div class="flex items-center text-sm">
         <div>
