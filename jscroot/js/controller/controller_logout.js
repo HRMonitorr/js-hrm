@@ -1,13 +1,6 @@
-import { deleteCookie } from "https://jscroot.github.io/cookie/croot.js";
+import { deleteCookie } from "./cookies.js";
 
-function logout() {
-  deleteCookie("Login");
+export default function Logout() {
+    deleteCookie();
+    window.location.href = "pages/login.html";
 }
-
-document.getElementById("logoutContainer").addEventListener("click", function (event) {
-  // Check if the clicked element is the logout link
-  if (event.target.matches('a[href="#"]')) {
-    logout();
-  }
-});
-// uyuyuyuy
