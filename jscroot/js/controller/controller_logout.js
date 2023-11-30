@@ -1,6 +1,6 @@
-import { deleteCookie } from "../config/config";
+import { deleteCookie } from "../config/config.js";
 
 export default function Logout() {
     deleteCookie();
-    window.location.href = "https://fancypedia.my.id/theme/signin/index.html";
+    window.location.href = "pages/login.html";
 }
