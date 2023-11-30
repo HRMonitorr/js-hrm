@@ -1,4 +1,3 @@
-// controller_logout.js
 import { deleteCookie } from 'https://jscroot.github.io/cookie/croot.js';
 
 function logout() {
