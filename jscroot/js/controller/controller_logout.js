@@ -1,6 +1,9 @@
-import { deleteCookie } from "../config/config.js";
+// controller_logout.js
+import { deleteCookie } from 'https://jscroot.github.io/cookie/croot.js';
 
-export default function Logout() {
-    deleteCookie();
-    window.location.href = "pages/login.html";
+function logout() {
+  deleteCookie('Login');
+  window.location.href = 'https://hrmonitor.advocata.me/dashboard/public/pages/login.html';
 }
+
+document.getElementById('logoutButton').addEventListener('click', logout);
