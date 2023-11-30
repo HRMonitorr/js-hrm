@@ -13,14 +13,14 @@ async function searchEmployee() {
   const employeeIdInput = document.getElementById('employeeIdInput').value;
 
   if (!employeeIdInput) {
-    alert("Please enter Employee ID");
+    // alert("Please enter Employee ID");
     return;
   }
 
   const token = getTokenFromCookies('Login');
 
   if (!token) {
-    alert("Anda Belum Login");
+    // alert("Anda Belum Login");
     return;
   }
 

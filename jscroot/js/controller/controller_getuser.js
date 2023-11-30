@@ -3,7 +3,7 @@ async function getUserWithToken() {
   const token = getTokenFromCookies('Login'); // Get the token dari cookies via parameter
 
   if (!token) {
-    alert("token tidak ditemukan");
+    // alert("token tidak ditemukan");
     return;
   }
 

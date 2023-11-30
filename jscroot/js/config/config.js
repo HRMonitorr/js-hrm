@@ -41,7 +41,7 @@ export function PostLogin() {
 }
 
 export function AlertPost(value){
-    alert(value.message + "\nRegistrasi Berhasil")
+    // alert(value.message + "\nRegistrasi Berhasil")
     window.location.href= "https://hrmonitor.advocata.me/dashboard/public/pages/login.html"
 }
 
@@ -51,9 +51,9 @@ function ResponsePostLogin(response) {
     // console.log('Token User:', response.token);
     setCookieWithExpireHour('Login', response.token, 2);
     window.location.href = 'https://hrmonitor.advocata.me/dashboard/public/index.html';
-    alert("Selamat Datang")
+    // alert("Selamat Datang")
   } else {
-    alert('Login gagal. Silakan coba lagi.');
+    // alert('Login gagal. Silakan coba lagi.');
   }
 }
 

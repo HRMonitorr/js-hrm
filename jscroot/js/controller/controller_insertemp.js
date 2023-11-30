@@ -19,7 +19,7 @@ const getTokenFromCookies = (cookieName) => {
     const token = getTokenFromCookies('Login');
   
     if (!token) {
-      alert("Header Login Not Found");
+      // alert("Header Login Not Found");
       return;
     }
   
@@ -33,7 +33,7 @@ const getTokenFromCookies = (cookieName) => {
     const honorDivisionInput = document.getElementById('newHonorDivisionInput').value;
   
     if (isNaN(basicSalaryInput) || isNaN(honorDivisionInput)) {
-      alert('Please enter valid numeric values for salary.');
+      // alert('Please enter valid numeric values for salary.');
       return;
     }
   
@@ -69,7 +69,7 @@ const getTokenFromCookies = (cookieName) => {
       if (data.status === false) {
         alert(data.message);
       } else {
-        alert("Employee data inserted successfully!");
+        // alert("Employee data inserted successfully!");
         // Optionally, you can reset the form or perform other actions.
       }
     } catch (error) {

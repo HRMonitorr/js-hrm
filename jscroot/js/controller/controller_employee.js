@@ -13,7 +13,7 @@ const getAllEmployees = async () => {
   const token = getTokenFromCookies('Login');
 
   if (!token) {
-    alert("Anda Belum Login");
+    // alert("Anda Belum Login");
     return;
   }
 
@@ -46,14 +46,14 @@ const searchEmployee = async () => {
   const employeeIdInput = document.getElementById('employeeIdInput').value;
 
   if (!employeeIdInput) {
-    alert("Please enter Employee ID");
+    // alert("Please enter Employee ID");
     return;
   }
 
   const token = getTokenFromCookies('Login');
 
   if (!token) {
-    alert("Anda Belum Login");
+    // alert("Anda Belum Login");
     return;
   }
 
@@ -87,7 +87,7 @@ const deleteEmployee = async (employeeId) => {
   const token = getTokenFromCookies('Login');
 
   if (!token) {
-    alert("Token login tidak ada");
+    // alert("Token login tidak ada");
     return;
   }
 
@@ -109,7 +109,7 @@ const deleteEmployee = async (employeeId) => {
     const data = await response.json();
 
     if (data.status === 200) {
-      alert("Employee deleted successfully!");
+      // alert("Employee deleted successfully!");
       getAllEmployees();
     } else {
       alert(data.message);
