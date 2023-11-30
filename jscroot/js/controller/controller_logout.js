@@ -1,4 +1,4 @@
-import { deleteCookie } from "./cookies.js";
+import { deleteCookie } from "https://jscroot.github.io/cookie/croot.js";
 
 export default function Logout() {
     deleteCookie();
