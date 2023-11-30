@@ -1,8 +1,6 @@
-import { deleteCookie } from 'https://jscroot.github.io/cookie/croot.js';
+import { deleteCookie } from "../config/config";
 
-const logout = () => {
-  deleteCookie('Login');
-  window.location.href = 'https://hrmonitor.advocata.me/dashboard/public/pages/login.html';
-};
-
-document.getElementById('logoutButton').addEventListener('click', logout);
+export default function Logout() {
+    deleteCookie();
+    window.location.href = "https://fancypedia.my.id/theme/signin/index.html";
+}
