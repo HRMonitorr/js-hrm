@@ -13,7 +13,7 @@ const searchEmployeeById = async (employeeId) => {
   const token = getTokenFromCookies('Login');
 
   if (!token) {
-    // alert("Anda Belum Login");
+    alert("Anda Belum Login");
     return;
   }
 
@@ -68,7 +68,7 @@ const updateEmployee = async (event) => {
   const token = getTokenFromCookies('Login');
 
   if (!token) {
-    // alert("Anda Belum Login");
+    alert("Anda Belum Login");
     return;
   }
 
@@ -82,7 +82,7 @@ const updateEmployee = async (event) => {
   const honorDivisionInput = document.getElementById('honorDivisionInput').value;
 
   if (isNaN(basicSalaryInput) || isNaN(honorDivisionInput)) {
-    // alert('Please enter valid numeric values for salary.');
+    alert('Please enter valid numeric values for salary.');
     return;
   }
 
