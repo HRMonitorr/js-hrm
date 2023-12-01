@@ -1,4 +1,3 @@
-// Include your getTokenFromCookies function here
 
 const getTokenFromCookies = (cookieName) => {
     const cookies = document.cookie.split(';');
@@ -11,7 +10,6 @@ const getTokenFromCookies = (cookieName) => {
     return null;
   };
   
-  // Your other functions remain the same
   
   const insertEmployee = async (event) => {
     event.preventDefault();
@@ -70,13 +68,11 @@ const getTokenFromCookies = (cookieName) => {
         alert(data.message);
       } else {
         alert("Employee data inserted successfully!");
-        // Optionally, you can reset the form or perform other actions.
       }
     } catch (error) {
       console.error('Error:', error);
     }
   };
   
-  // Attach the insertEmployee function to the form's submit event
   document.getElementById('newEmployeeForm').addEventListener('submit', insertEmployee);
   
