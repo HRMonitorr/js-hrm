@@ -44,7 +44,7 @@ export function PostLogin() {
 }
 
 export function AlertPost(value) {
-  Swal.fire(value.message, "Registrasi Berhasil", "success")
+  Swal.fire("Selamat", "Registrasi Berhasil", "success")
     .then(() => {
       window.location.href = "https://hrmonitor.advocata.me/dashboard/public/pages/login.html";
     });
