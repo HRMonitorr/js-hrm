@@ -122,7 +122,7 @@ const updateEmployee = async (event) => {
 
     if (data.status === 200) {
       showAlert('Employee data updated successfully!', 'success');
-      window.location.href = 'pages/';
+      window.location.href = 'tables_emp.html';
     } else {
       showAlert(data.message, 'error');
     }

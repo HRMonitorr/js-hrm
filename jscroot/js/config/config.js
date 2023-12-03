@@ -1,72 +1,82 @@
+import Swal from 'sweetalert2';
 import { setCookieWithExpireHour } from 'https://jscroot.github.io/cookie/croot.js';
 
-// token
+//token
 let userToken;
 
 export function getTokenFromAPI() {
-  const tokenUrl = "https://asia-southeast2-gis-project-401902.cloudfunctions.net/Login";
-  fetch(tokenUrl)
-    .then(response => response.json())
-    .then(tokenData => {
-      if (tokenData.token) {
-        userToken = tokenData.token;
-        // console.log('Token dari API:', userToken);
-      }
-    })
-    .catch(error => console.error('Gagal mengambil token:', error));
+    const tokenUrl = "https://asia-southeast2-gis-project-401902.cloudfunctions.net/Login";
+    fetch(tokenUrl)
+        .then(response => response.json())
+        .then(tokenData => {
+            if (tokenData.token) {
+                userToken = tokenData.token;
+                console.log('Token dari API:', userToken);
+            }
+        })
+        .catch(error => console.error('Gagal mengambil token:', error));
 }
 
 export function GetDataForm() {
-  const username = document.querySelector("#username").value;
-  const password = document.querySelector("#password").value;
-  console.log(password)
+    const username = document.querySelector("#username").value;
+    const password = document.querySelector("#password").value;
+    const role = document.querySelector("#role").value;
+    console.log(password);
 
-  const data = {
-    username: username,
-    password: password,
-    role: role
-  };
-  return data;
+    const data = {
+        username: username,
+        password: password,
+        role: role
+    };
+    return data;
 }
 
-// login
 export function PostLogin() {
-  const username = document.getElementById("username").value;
-  const password = document.getElementById("password").value;
-  const role = document.getElementById("role").value;
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+    const role = document.getElementById("role").value;
 
-  const data = {
-    username: username,
-    password: password,
-    role: role
-  };
-  return data;
+    const data = {
+        username: username,
+        password: password,
+        role: role
+    };
+    return data;
 }
 
 export function AlertPost(value) {
-  Swal.fire("Selamat", "Registrasi Berhasil", "success")
-    .then(() => {
-      window.location.href = "https://hrmonitor.advocata.me/dashboard/public/pages/login.html";
+    Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: value.message + '\nRegistrasi Berhasil',
+    }).then(() => {
+        window.location.href = 'https://hrmonitor.advocata.me/dashboard/public/pages/login.html';
     });
 }
 
 function ResponsePostLogin(response) {
-  if (response && response.token) {
-    // console.log('Token User:', response.token);
-    setCookieWithExpireHour('Login', response.token, 2);
-    Swal.fire("Selamat Datang", "", "Berhasil Login")
-      .then(() => {
-        window.location.href = 'https://hrmonitor.advocata.me/dashboard/public/index.html';
-      });
-  } else {
-    Swal.fire('Login gagal. Silakan coba lagi.');
-  }
+    if (response && response.token) {
+        setCookieWithExpireHour('Login', response.token, 2);
+        Swal.fire({
+            icon: 'success',
+            title: 'Welcome',
+            text: 'Login successful!',
+        }).then(() => {
+            window.location.href = 'https://hrmonitor.advocata.me/dashboard/public/index.html';
+        });
+    } else {
+        Swal.fire({
+            icon: 'error',
+            title: 'Login Failed',
+            text: 'Invalid username or password. Please try again.',
+        });
+    }
 }
 
 export function ResponsePost(result) {
-  AlertPost(result);
+    AlertPost(result);
 }
 
 export function ResponseLogin(result) {
-  ResponsePostLogin(result);
+    ResponsePostLogin(result);
 }
