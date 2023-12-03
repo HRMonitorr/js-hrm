@@ -75,7 +75,7 @@ const insertEmployee = async (event) => {
       showAlert(data.message, 'error');
     } else {
       showAlert("Employee data inserted successfully!", 'success');
-      window.location.href = 'tables_emp.html'; 
+      window.location.href = 'tables_emp.html';
     }
   } catch (error) {
     console.error('Error:', error);
