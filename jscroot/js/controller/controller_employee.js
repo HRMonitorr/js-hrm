@@ -1,17 +1,3 @@
-
-
-
-// Function to show SweetAlert
-const showAlert = (title, text, icon = 'info') => {
-  Swal.fire({
-    title: title,
-    text: text,
-    icon: icon,
-    confirmButtonText: 'OK',
-  });
-};
-
-// Function to get token from cookies
 const getTokenFromCookies = (cookieName) => {
   const cookies = document.cookie.split(';');
   for (const cookie of cookies) {
@@ -23,12 +9,11 @@ const getTokenFromCookies = (cookieName) => {
   return null;
 };
 
-// Function to fetch all employees
 const getAllEmployees = async () => {
   const token = getTokenFromCookies('Login');
 
   if (!token) {
-    showAlert("Anda Belum Login", "Silakan login terlebih dahulu.");
+    // alert("Anda Belum Login");
     return;
   }
 
@@ -50,27 +35,25 @@ const getAllEmployees = async () => {
     if (data.status === 200) {
       displayEmployeeData(data.data, 'EmployeeDataBody');
     } else {
-      showAlert("Error", data.message, "error");
+      alert(data.message);
     }
   } catch (error) {
     console.error('Error:', error);
-    showAlert("Error", "Terjadi kesalahan yang tidak terduga.", "error");
   }
 };
 
-// Function to search for an employee
 const searchEmployee = async () => {
   const employeeIdInput = document.getElementById('employeeIdInput').value;
 
   if (!employeeIdInput) {
-    showAlert("Error", "Silakan masukkan ID Karyawan", "error");
+    // alert("Please enter Employee ID");
     return;
   }
 
   const token = getTokenFromCookies('Login');
 
   if (!token) {
-    showAlert("Anda Belum Login", "Silakan login terlebih dahulu.");
+    // alert("Anda Belum Login");
     return;
   }
 
@@ -93,20 +76,18 @@ const searchEmployee = async () => {
     if (data.status === 200) {
       displayEmployeeData([data.data], 'EmployeeDataBody');
     } else {
-      showAlert("Error", data.message, "error");
+      alert(data.message);
     }
   } catch (error) {
     console.error('Error:', error);
-    showAlert("Error", "Terjadi kesalahan yang tidak terduga.", "error");
   }
 };
 
-// Function to delete an employee
 const deleteEmployee = async (employeeId) => {
   const token = getTokenFromCookies('Login');
 
   if (!token) {
-    showAlert("Error", "Token login tidak ada", "error");
+    // alert("Token login tidak ada");
     return;
   }
 
@@ -128,26 +109,22 @@ const deleteEmployee = async (employeeId) => {
     const data = await response.json();
 
     if (data.status === 200) {
-      showAlert("Sukses", "Karyawan berhasil dihapus!", "success");
+      // alert("Employee deleted successfully!");
       getAllEmployees();
     } else {
-      showAlert("Error", data.message, "error");
+      alert(data.message);
     }
   } catch (error) {
     console.error('Error:', error);
-    showAlert("Error", "Terjadi kesalahan yang tidak terduga.", "error");
   }
 };
 
-// Function to edit an employee
 const editEmployee = (employeeId) => {
   window.location.href = `formsupdate.html?employeeid=${employeeId}`;
 };
 
-// Event listener for search button click
 document.getElementById('searchButton').addEventListener('click', searchEmployee);
 
-// Event listener for employee data body click
 document.getElementById('EmployeeDataBody').addEventListener('click', (event) => {
   const target = event.target;
   if (target.classList.contains('edit-link')) {
@@ -159,24 +136,12 @@ document.getElementById('EmployeeDataBody').addEventListener('click', (event) =>
   }
 });
 
-// Function to handle delete employee confirmation
 const deleteEmployeeHandler = (employeeId) => {
-  Swal.fire({
-    title: "Apakah Anda yakin?",
-    text: "Setelah dihapus, Anda tidak dapat memulihkan data karyawan ini!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonText: "Ya, hapus!",
-    cancelButtonText: "Tidak, batal!",
-    reverseButtons: true,
-  }).then((result) => {
-    if (result.isConfirmed) {
-      deleteEmployee(employeeId);
-    }
-  });
+  if (confirm("Are you sure you want to delete this employee?")) {
+    deleteEmployee(employeeId);
+  }
 };
 
-// Function to display employee data in the table
 const displayEmployeeData = (employeeData, tableBodyId) => {
   const employeeDataBody = document.getElementById(tableBodyId);
 
@@ -188,43 +153,43 @@ const displayEmployeeData = (employeeData, tableBodyId) => {
       newRow.innerHTML = `
       
       <td class="px-4 py-3">
-        <div class="flex items-center text-sm">
-          <div>
-            <p class="font-semibold">${emp.employeeid}</p>
-          </div>
+      <div class="flex items-center text-sm">
+        <div>
+          <p class="font-semibold">${emp.employeeid}</p>
         </div>
-      </td>
-      <td class="px-4 py-3 text-sm">
-        <p class="font-semibold">${emp.name}</p>
-      </td>
-      <td class="px-4 py-3 text-sm">
-        <p class="font-semibold">${emp.email}</p>
-      </td>
-      <td class="px-4 py-3 text-sm">
-        ${emp.phone}
-      </td>
-      <td class="px-4 py-3 text-xs">
-        <span
-          class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
-          ${emp.division['divName']}
-        </span>
-      </td>
-      <td class="px-4 py-3 text-sm">
-        ${emp.salary['basic-salary']}
-      </td>
-      <td class="px-4 py-3 text-sm">
-        ${emp.salary['honor-division']}
-      </td>
-      <td class="px-4 py-3">
-        <a href="#" class="edit-link" data-employeeid="${emp.employeeid}">Edit</a>
-        <a href="#" class="delete-link" data-employeeid="${emp.employeeid}">Delete</a>
-      </td>
+      </div>
+    </td>
+    <td class="px-4 py-3 text-sm">
+      <p class="font-semibold">${emp.name}</p>
+    </td>
+    <td class="px-4 py-3 text-sm">
+      <p class="font-semibold">${emp.email}</p>
+    </td>
+    <td class="px-4 py-3 text-sm">
+      ${emp.phone}
+    </td>
+    <td class="px-4 py-3 text-xs">
+      <span
+        class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
+        ${emp.division['divName']}
+      </span>
+    </td>
+    <td class="px-4 py-3 text-sm">
+      ${emp.salary['basic-salary']}
+    </td>
+    <td class="px-4 py-3 text-sm">
+      ${emp.salary['honor-division']}
+    </td>
+        <td class="px-4 py-3">
+          <a href="#" class="edit-link" data-employeeid="${emp.employeeid}">Edit</a>
+          <a href="#" class="delete-link" data-employeeid="${emp.employeeid}">Delete</a>
+        </td>
       `;
 
       employeeDataBody.appendChild(newRow);
     });
   } else {
-    employeeDataBody.innerHTML = `<tr><td colspan="9">Tidak ada data karyawan ditemukan.</td></tr>`;
+    employeeDataBody.innerHTML = `<tr><td colspan="9">No user data found.</td></tr>`;
   }
 };
 

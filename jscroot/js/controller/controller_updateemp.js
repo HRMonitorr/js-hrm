@@ -13,7 +13,7 @@ const searchEmployeeById = async (employeeId) => {
   const token = getTokenFromCookies('Login');
 
   if (!token) {
-    showAlert("Error", "Anda Belum Login");
+    alert("Anda Belum Login");
     return;
   }
 
@@ -36,7 +36,7 @@ const searchEmployeeById = async (employeeId) => {
     if (data.status === 200) {
       populateForm(data.data);
     } else {
-      showAlert("Error", data.message);
+      alert(data.message);
     }
   } catch (error) {
     console.error('Error:', error);
@@ -68,7 +68,7 @@ const updateEmployee = async (event) => {
   const token = getTokenFromCookies('Login');
 
   if (!token) {
-    showAlert("Error", "Anda Belum Login");
+    alert("Anda Belum Login");
     return;
   }
 
@@ -82,7 +82,7 @@ const updateEmployee = async (event) => {
   const honorDivisionInput = document.getElementById('honorDivisionInput').value;
 
   if (isNaN(basicSalaryInput) || isNaN(honorDivisionInput)) {
-    showAlert('Error', 'Please enter valid numeric values for salary.');
+    alert('Please enter valid numeric values for salary.');
     return;
   }
 
@@ -112,10 +112,9 @@ const updateEmployee = async (event) => {
     const data = await response.json();
 
     if (data.status === 200) {
-      showAlert('Success', 'Employee data updated successfully!');
-      window.location.href = 'pages/';
+window.location.href = 'pages/';
     } else {
-      showAlert('Error', data.message);
+      alert(data.message);
     }
   } catch (error) {
     console.error('Error:', error);
@@ -131,13 +130,3 @@ if (employeeIdFromURL) {
 document.getElementById('employeeForm').style.display = 'block';
 
 document.getElementById('employeeForm').addEventListener('submit', updateEmployee);
-
-// Function to show SweetAlert2
-function showAlert(title, text, icon = 'info') {
-  Swal.fire({
-    title: title,
-    text: text,
-    icon: icon,
-    confirmButtonText: 'OK',
-  });
-}
