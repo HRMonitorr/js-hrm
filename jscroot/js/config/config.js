@@ -43,6 +43,11 @@ export function PostLogin() {
 export function AlertPost(value){
     // alert(value.message + "\nRegistrasi Berhasil")
     window.location.href= "https://hrmonitor.advocata.me/dashboard/public/pages/login.html"
+    Swal.fire({
+      icon: 'success',
+      title: 'Registrasi Berhasil',
+      text: 'You have successfully logged in!',
+    });
 }
 
 
@@ -51,12 +56,19 @@ function ResponsePostLogin(response) {
     // console.log('Token User:', response.token);
     setCookieWithExpireHour('Login', response.token, 2);
     window.location.href = 'https://hrmonitor.advocata.me/dashboard/public/index.html';
-    // alert("Selamat Datang")
-  } else {
-    // alert('Login gagal. Silakan coba lagi.');
-  }
+    Swal.fire({
+      icon: 'success',
+      title: 'Login Successful',
+      text: 'You have successfully logged in!',
+    });
+} else {
+Swal.fire({
+      icon: 'error',
+      title: 'Login Failed',
+      text: 'Invalid Username or password. Please try again.',
+       });
+  }
 }
-
 
 export function ResponsePost(result) {
     AlertPost(result);
