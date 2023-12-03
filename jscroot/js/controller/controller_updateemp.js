@@ -16,7 +16,7 @@ const showAlert = (message) => {
     showConfirmButton: false,
     timer: 1500
   }).then(() => {
-    location.reload();
+    window.location.href = 'tables_emp.html';
   });
 };
 
@@ -123,7 +123,7 @@ const updateEmployee = async (event) => {
     const data = await response.json();
 
     if (data.status === 200) {
-      showAlert('Employee data updated successfully!', 'success');
+      showAlert('Berhasil Update Data', 'success');
       window.location.href = 'tables_emp.html';
     } else {
       showAlert(data.message, 'error');
