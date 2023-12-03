@@ -1,3 +1,4 @@
+
 const getTokenFromCookies = (cookieName) => {
   const cookies = document.cookie.split(';');
   for (const cookie of cookies) {
@@ -9,11 +10,20 @@ const getTokenFromCookies = (cookieName) => {
   return null;
 };
 
+const showAlert = (message, type = 'success') => {
+  Swal.fire({
+    icon: type,
+    text: message,
+    showConfirmButton: false,
+    timer: 1500
+  });
+};
+
 const getAllEmployees = async () => {
   const token = getTokenFromCookies('Login');
 
   if (!token) {
-    // alert("Anda Belum Login");
+    showAlert("Anda Belum Login", 'error');
     return;
   }
 
@@ -35,7 +45,7 @@ const getAllEmployees = async () => {
     if (data.status === 200) {
       displayEmployeeData(data.data, 'EmployeeDataBody');
     } else {
-      alert(data.message);
+      showAlert(data.message, 'error');
     }
   } catch (error) {
     console.error('Error:', error);
@@ -46,14 +56,14 @@ const searchEmployee = async () => {
   const employeeIdInput = document.getElementById('employeeIdInput').value;
 
   if (!employeeIdInput) {
-    // alert("Please enter Employee ID");
+    showAlert("Please enter Employee ID", 'error');
     return;
   }
 
   const token = getTokenFromCookies('Login');
 
   if (!token) {
-    // alert("Anda Belum Login");
+    showAlert("Anda Belum Login", 'error');
     return;
   }
 
@@ -76,7 +86,7 @@ const searchEmployee = async () => {
     if (data.status === 200) {
       displayEmployeeData([data.data], 'EmployeeDataBody');
     } else {
-      alert(data.message);
+      showAlert(data.message, 'error');
     }
   } catch (error) {
     console.error('Error:', error);
@@ -87,7 +97,7 @@ const deleteEmployee = async (employeeId) => {
   const token = getTokenFromCookies('Login');
 
   if (!token) {
-    // alert("Token login tidak ada");
+    showAlert("Token login tidak ada", 'error');
     return;
   }
 
@@ -109,10 +119,10 @@ const deleteEmployee = async (employeeId) => {
     const data = await response.json();
 
     if (data.status === 200) {
-      // alert("Employee deleted successfully!");
+      showAlert("Employee deleted successfully!");
       getAllEmployees();
     } else {
-      alert(data.message);
+      showAlert(data.message, 'error');
     }
   } catch (error) {
     console.error('Error:', error);

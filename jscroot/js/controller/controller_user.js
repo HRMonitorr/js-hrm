@@ -1,15 +1,14 @@
 // Function to make the API request with the token
 async function getUserWithToken() {
-  const token = getTokenFromCookies('Login'); // Get the token dari cookies via parameter
+  const token = getTokenFromCookies('Login');
 
   if (!token) {
-    // alert("token tidak ditemukan");
+    showAlert("Token tidak ditemukan", 'error');
     return;
   }
 
   const targetURL = 'https://asia-southeast2-gis-project-401902.cloudfunctions.net/GetUserWithToken';
 
-  // Set up headers with the token
   const myHeaders = new Headers();
   myHeaders.append('Login', token);
 
@@ -26,7 +25,7 @@ async function getUserWithToken() {
     if (data.status === true) {
       displayUserData(data.data);
     } else {
-      alert(data.message);
+      showAlert(data.message, 'error');
     }
   } catch (error) {
     console.error('Error:', error);
@@ -74,12 +73,29 @@ function displayUserData(userData) {
       deleteLink.addEventListener('click', (event) => {
         event.preventDefault();
         const usernameToDelete = event.target.getAttribute('data-employeeid');
-        deleteUser(usernameToDelete);
+        confirmDeleteUser(usernameToDelete);
       });
     });
   } else {
     userDataBody.innerHTML = '<tr><td colspan="3">No user data found.</td></tr>';
   }
+}
+
+// Function to confirm user deletion
+function confirmDeleteUser(usernameToDelete) {
+  Swal.fire({
+    title: 'Are you sure?',
+    text: 'You won\'t be able to revert this!',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      deleteUser(usernameToDelete);
+    }
+  });
 }
 
 // Function to delete user by username
@@ -101,15 +117,25 @@ async function deleteUser(usernameToDelete) {
     const data = await response.json();
 
     if (data.status === true) {
-      // alert('User deleted successfully.');
+      showAlert('User deleted successfully.', 'success');
       // Reload the user data after deletion
       getUserWithToken();
     } else {
-      alert(data.message);
+      showAlert(data.message, 'error');
     }
   } catch (error) {
     console.error('Error:', error);
   }
 }
+
+// Function to show SweetAlert
+const showAlert = (message, type = 'info') => {
+  Swal.fire({
+    icon: type,
+    text: message,
+    showConfirmButton: false,
+    timer: 1500
+  });
+};
 
 getUserWithToken();

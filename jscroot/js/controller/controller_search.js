@@ -1,3 +1,4 @@
+
 function getTokenFromCookies(cookieName) {
   const cookies = document.cookie.split(';');
   for (const cookie of cookies) {
@@ -13,14 +14,14 @@ async function searchEmployee() {
   const employeeIdInput = document.getElementById('employeeIdInput').value;
 
   if (!employeeIdInput) {
-    // alert("Please enter Employee ID");
+    showAlert("Please enter Employee ID");
     return;
   }
 
   const token = getTokenFromCookies('Login');
 
   if (!token) {
-    // alert("Anda Belum Login");
+    showAlert("Anda Belum Login");
     return;
   }
 
@@ -43,7 +44,7 @@ async function searchEmployee() {
     if (data.status === 200) {
       displayEmployeeData([data.data], 'EmployeeDataBody');
     } else {
-      alert(data.message);
+      showAlert(data.message, 'error');
     }
   } catch (error) {
     console.error('Error:', error);
@@ -55,3 +56,13 @@ document.getElementById('searchButton').addEventListener('click', searchEmployee
 function editEmployee(employeeId) {
   window.location.href = `update_form.html?employeeid=${employeeId}`;
 }
+
+// Function to show SweetAlert
+const showAlert = (message, type = 'info') => {
+  Swal.fire({
+    icon: type,
+    text: message,
+    showConfirmButton: false,
+    timer: 1500
+  });
+};

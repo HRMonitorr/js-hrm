@@ -9,11 +9,20 @@ const getTokenFromCookies = (cookieName) => {
   return null;
 };
 
+const showAlert = (message, type = 'info') => {
+  Swal.fire({
+    icon: type,
+    text: message,
+    showConfirmButton: false,
+    timer: 1500
+  });
+};
+
 const searchEmployeeById = async (employeeId) => {
   const token = getTokenFromCookies('Login');
 
   if (!token) {
-    alert("Anda Belum Login");
+    showAlert("Anda Belum Login", 'error');
     return;
   }
 
@@ -36,7 +45,7 @@ const searchEmployeeById = async (employeeId) => {
     if (data.status === 200) {
       populateForm(data.data);
     } else {
-      alert(data.message);
+      showAlert(data.message, 'error');
     }
   } catch (error) {
     console.error('Error:', error);
@@ -68,7 +77,7 @@ const updateEmployee = async (event) => {
   const token = getTokenFromCookies('Login');
 
   if (!token) {
-    alert("Anda Belum Login");
+    showAlert("Anda Belum Login", 'error');
     return;
   }
 
@@ -82,7 +91,7 @@ const updateEmployee = async (event) => {
   const honorDivisionInput = document.getElementById('honorDivisionInput').value;
 
   if (isNaN(basicSalaryInput) || isNaN(honorDivisionInput)) {
-    alert('Please enter valid numeric values for salary.');
+    showAlert('Please enter valid numeric values for salary.', 'error');
     return;
   }
 
@@ -112,9 +121,10 @@ const updateEmployee = async (event) => {
     const data = await response.json();
 
     if (data.status === 200) {
-window.location.href = 'pages/';
+      showAlert('Employee data updated successfully!', 'success');
+      window.location.href = 'pages/';
     } else {
-      alert(data.message);
+      showAlert(data.message, 'error');
     }
   } catch (error) {
     console.error('Error:', error);

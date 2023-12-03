@@ -54,12 +54,12 @@ function ResponsePostLogin(response) {
   if (response && response.token) {
     // console.log('Token User:', response.token);
     setCookieWithExpireHour('Login', response.token, 2);
-    Swal.fire("Selamat Datang", "", "success")
+    Swal.fire("Selamat Datang", "", "Berhasil Login")
       .then(() => {
         window.location.href = 'https://hrmonitor.advocata.me/dashboard/public/index.html';
       });
   } else {
-    Swal.fire('Login gagal. Silakan coba lagi.', "", "error");
+    Swal.fire('Login gagal. Silakan coba lagi.');
   }
 }
 
