@@ -56,14 +56,14 @@ function ResponsePostLogin(response) {
       icon: 'success',
       title: 'Login Successful',
       text: 'You have successfully logged in!',
+    }).then(() => {
+      window.location.href = 'https://hrmonitor.advocata.me/dashboard/public/index.html';
     });
   } else {
     Swal.fire({
       icon: 'error',
       title: 'Login Failed',
       text: 'Invalid username, password, or role. Please try again.',
-    }).then(() => {
-      window.location.href = 'https://hrmonitor.advocata.me/dashboard/public/index.html';
     });
   }
 }
