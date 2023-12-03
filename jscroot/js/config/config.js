@@ -57,7 +57,7 @@ function ResponsePostLogin(response) {
       title: 'Login Successful',
       text: 'You have successfully logged in!',
     }).then(() => {
-      window.location.href = '/public/index.html';
+      window.location.href = 'dashboard/public/index.html';
     });
   } else {
     Swal.fire({
