@@ -45,7 +45,7 @@ export function AlertPost(value) {
     title: 'Registration Successful',
     text: 'You have successfully registered!',
   }).then(() => {
-    window.location.href = "pages/login.html";
+    window.location.href = "login.html";
   });
 }
 
