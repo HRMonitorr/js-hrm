@@ -174,7 +174,6 @@ document.getElementById('EmployeeDataBody').addEventListener('click', (event) =>
     deleteEmployeeHandler(employeeId);
   }
 });
-
 const deleteEmployeeHandler = (employeeId) => {
   Swal.fire({
     title: 'Are you sure?',
