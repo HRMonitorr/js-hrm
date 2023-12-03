@@ -45,7 +45,7 @@ export function AlertPost(value) {
     title: 'Registration Successful',
     text: 'You have successfully registered!',
   }).then(() => {
-    window.location.href = "https://hrmonitor.advocata.me/dashboard/public/pages/login.html";
+    window.location.href = "pages/login.html";
   });
 }
 
@@ -57,7 +57,7 @@ function ResponsePostLogin(response) {
       title: 'Login Successful',
       text: 'You have successfully logged in!',
     }).then(() => {
-      window.location.href = 'https://hrmonitor.advocata.me/dashboard/public/index.html';
+      window.location.href = '/public/index.html';
     });
   } else {
     Swal.fire({

@@ -118,8 +118,8 @@ async function deleteUser(usernameToDelete) {
 
     if (data.status === true) {
       showAlert('User deleted successfully.', 'success');
-      // Reload the user data after deletion
-      getUserWithToken();
+      // Redirect to a specific page after deletion
+      window.location.href = 'tables_emp.html';
     } else {
       showAlert(data.message, 'error');
     }

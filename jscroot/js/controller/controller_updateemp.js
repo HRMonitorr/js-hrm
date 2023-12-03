@@ -37,7 +37,6 @@ const searchEmployeeById = async (employeeId) => {
     body: JSON.stringify({ employeeid: employeeId }),
     redirect: 'follow',
   };
-
   try {
     const response = await fetch(targetURL, requestOptions);
     const data = await response.json();

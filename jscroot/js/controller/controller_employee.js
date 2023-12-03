@@ -1,4 +1,3 @@
-
 const getTokenFromCookies = (cookieName) => {
   const cookies = document.cookie.split(';');
   for (const cookie of cookies) {
@@ -10,20 +9,17 @@ const getTokenFromCookies = (cookieName) => {
   return null;
 };
 
-const showAlert = (message, type = 'success') => {
-  Swal.fire({
-    icon: type,
-    text: message,
-    showConfirmButton: false,
-    timer: 1500
-  });
-};
-
 const getAllEmployees = async () => {
   const token = getTokenFromCookies('Login');
 
   if (!token) {
-    showAlert("Anda Belum Login", 'error');
+    Swal.fire({
+      icon: 'warning',
+      title: 'Authentication Error',
+      text: 'You are not logged in.',
+    }).then(() => {
+      window.location.href = 'pages/login.html'; 
+    });
     return;
   }
 
@@ -35,7 +31,7 @@ const getAllEmployees = async () => {
   const requestOptions = {
     method: 'GET',
     headers: myHeaders,
-    redirect: 'follow'
+    redirect: 'follow',
   };
 
   try {
@@ -45,7 +41,11 @@ const getAllEmployees = async () => {
     if (data.status === 200) {
       displayEmployeeData(data.data, 'EmployeeDataBody');
     } else {
-      showAlert(data.message, 'error');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: data.message,
+      });
     }
   } catch (error) {
     console.error('Error:', error);
@@ -56,14 +56,24 @@ const searchEmployee = async () => {
   const employeeIdInput = document.getElementById('employeeIdInput').value;
 
   if (!employeeIdInput) {
-    showAlert("Please enter Employee ID", 'error');
+    Swal.fire({
+      icon: 'warning',
+      title: 'Validation Error',
+      text: 'Please enter Employee ID.',
+    });
     return;
   }
 
   const token = getTokenFromCookies('Login');
 
   if (!token) {
-    showAlert("Anda Belum Login", 'error');
+    Swal.fire({
+      icon: 'warning',
+      title: 'Authentication Error',
+      text: 'You are not logged in.',
+    }).then(() => {
+      window.location.href = 'pages/login.html'; 
+    });
     return;
   }
 
@@ -76,7 +86,7 @@ const searchEmployee = async () => {
     method: 'POST',
     headers: myHeaders,
     body: JSON.stringify({ employeeid: employeeIdInput }),
-    redirect: 'follow'
+    redirect: 'follow',
   };
 
   try {
@@ -86,7 +96,11 @@ const searchEmployee = async () => {
     if (data.status === 200) {
       displayEmployeeData([data.data], 'EmployeeDataBody');
     } else {
-      showAlert(data.message, 'error');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: data.message,
+      });
     }
   } catch (error) {
     console.error('Error:', error);
@@ -97,7 +111,13 @@ const deleteEmployee = async (employeeId) => {
   const token = getTokenFromCookies('Login');
 
   if (!token) {
-    showAlert("Token login tidak ada", 'error');
+    Swal.fire({
+      icon: 'warning',
+      title: 'Authentication Error',
+      text: 'You are not logged in.',
+    }).then(() => {
+      window.location.href = 'tables_emp.html';
+    });
     return;
   }
 
@@ -111,7 +131,7 @@ const deleteEmployee = async (employeeId) => {
     method: 'DELETE',
     headers: myHeaders,
     body: JSON.stringify({ employeeid: employeeId }),
-    redirect: 'follow'
+    redirect: 'follow',
   };
 
   try {
@@ -119,10 +139,19 @@ const deleteEmployee = async (employeeId) => {
     const data = await response.json();
 
     if (data.status === 200) {
-      showAlert("Employee deleted successfully!");
-      getAllEmployees();
+      Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Employee deleted successfully!',
+      }).then(() => {
+        getAllEmployees();
+      });
     } else {
-      showAlert(data.message, 'error');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: data.message,
+      });
     }
   } catch (error) {
     console.error('Error:', error);
@@ -147,7 +176,7 @@ document.getElementById('EmployeeDataBody').addEventListener('click', (event) =>
 });
 
 const deleteEmployeeHandler = (employeeId) => {
-  if (confirm("Are you sure you want to delete this employee?")) {
+  if (confirm('Are you sure you want to delete this employee?')) {
     deleteEmployee(employeeId);
   }
 };
@@ -158,38 +187,37 @@ const displayEmployeeData = (employeeData, tableBodyId) => {
   employeeDataBody.innerHTML = '';
 
   if (employeeData && employeeData.length > 0) {
-    employeeData.forEach(emp => {
+    employeeData.forEach((emp) => {
       const newRow = document.createElement('tr');
       newRow.innerHTML = `
-      
-      <td class="px-4 py-3">
-      <div class="flex items-center text-sm">
-        <div>
-          <p class="font-semibold">${emp.employeeid}</p>
-        </div>
-      </div>
-    </td>
-    <td class="px-4 py-3 text-sm">
-      <p class="font-semibold">${emp.name}</p>
-    </td>
-    <td class="px-4 py-3 text-sm">
-      <p class="font-semibold">${emp.email}</p>
-    </td>
-    <td class="px-4 py-3 text-sm">
-      ${emp.phone}
-    </td>
-    <td class="px-4 py-3 text-xs">
-      <span
-        class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
-        ${emp.division['divName']}
-      </span>
-    </td>
-    <td class="px-4 py-3 text-sm">
-      ${emp.salary['basic-salary']}
-    </td>
-    <td class="px-4 py-3 text-sm">
-      ${emp.salary['honor-division']}
-    </td>
+        <td class="px-4 py-3">
+          <div class="flex items-center text-sm">
+            <div>
+              <p class="font-semibold">${emp.employeeid}</p>
+            </div>
+          </div>
+        </td>
+        <td class="px-4 py-3 text-sm">
+          <p class="font-semibold">${emp.name}</p>
+        </td>
+        <td class="px-4 py-3 text-sm">
+          <p class="font-semibold">${emp.email}</p>
+        </td>
+        <td class="px-4 py-3 text-sm">
+          ${emp.phone}
+        </td>
+        <td class="px-4 py-3 text-xs">
+          <span
+            class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
+            ${emp.division['divName']}
+          </span>
+        </td>
+        <td class="px-4 py-3 text-sm">
+          ${emp.salary['basic-salary']}
+        </td>
+        <td class="px-4 py-3 text-sm">
+          ${emp.salary['honor-division']}
+        </td>
         <td class="px-4 py-3">
           <a href="#" class="edit-link" data-employeeid="${emp.employeeid}">Edit</a>
           <a href="#" class="delete-link" data-employeeid="${emp.employeeid}">Delete</a>
