@@ -121,18 +121,17 @@ const updateEmployee = async (event) => {
   try {
     const response = await fetch(targetURL, requestOptions);
     const data = await response.json();
-  
+
     if (data.status === 200) {
-      showAlert('Employee data updated successfully! Redirecting...', 'success');
-      setTimeout(() => {
-        window.location.href = 'tables_emp.html';
-      }, 2000);
+      showAlert('Employee data updated successfully!', 'success');
+      window.location.href = 'tables_emp.html';
     } else {
       showAlert(data.message, 'error');
     }
   } catch (error) {
     console.error('Error:', error);
   }
+};
 
 const employeeIdFromURL = new URLSearchParams(window.location.search).get('employeeid');
 if (employeeIdFromURL) {
@@ -142,4 +141,4 @@ if (employeeIdFromURL) {
 
 document.getElementById('employeeForm').style.display = 'block';
 
-document.getElementById('employeeForm').addEventListener('submit', updateEmployee)};
+document.getElementById('employeeForm').addEventListener('submit', updateEmployee);
