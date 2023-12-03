@@ -1,9 +1,19 @@
+// Function to show SweetAlert
+function showAlert(title, text, icon = 'info') {
+  Swal.fire({
+    title: title,
+    text: text,
+    icon: icon,
+    confirmButtonText: 'OK',
+  });
+}
+
 // Function to make the API request with the token
 async function getUserWithToken() {
-  const token = getTokenFromCookies('Login'); // Get the token dari cookies via parameter
+  const token = getTokenFromCookies('Login'); // Get the token from cookies via parameter
 
   if (!token) {
-    alert("token tidak ditemukan");
+    showAlert("Token Tidak Ditemukan", "Token tidak ditemukan.");
     return;
   }
 
@@ -26,10 +36,11 @@ async function getUserWithToken() {
     if (data.status === true) {
       displayUserData(data.data);
     } else {
-      alert(data.message);
+      showAlert("Error", data.message, "error");
     }
   } catch (error) {
     console.error('Error:', error);
+    showAlert("Error", "Terjadi kesalahan yang tidak terduga.", "error");
   }
 }
 
@@ -67,8 +78,9 @@ function displayUserData(userData) {
       userDataBody.appendChild(newRow);
     });
   } else {
-    userDataBody.innerHTML = '<tr><td colspan="3">No user data found.</td></tr>';
+    userDataBody.innerHTML = '<tr><td colspan="2">Tidak ada data pengguna ditemukan.</td></tr>';
   }
 }
 
+// Initial fetch of user data with token
 getUserWithToken();

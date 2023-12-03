@@ -3,7 +3,7 @@ async function getUserWithToken() {
   const token = getTokenFromCookies('Login'); // Get the token dari cookies via parameter
 
   if (!token) {
-    // alert("token tidak ditemukan");
+    alert("token tidak ditemukan");
     return;
   }
 
@@ -101,7 +101,7 @@ async function deleteUser(usernameToDelete) {
     const data = await response.json();
 
     if (data.status === true) {
-      // alert('User deleted successfully.');
+      alert('User deleted successfully.');
       // Reload the user data after deletion
       getUserWithToken();
     } else {

@@ -1,4 +1,3 @@
-
 // Function to show SweetAlert
 const showAlert = (title, text, icon = 'info') => {
   Swal.fire({

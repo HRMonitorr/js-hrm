@@ -13,14 +13,14 @@ async function searchEmployee() {
   const employeeIdInput = document.getElementById('employeeIdInput').value;
 
   if (!employeeIdInput) {
-    // alert("Please enter Employee ID");
+    showAlert("Error", "Please enter Employee ID");
     return;
   }
 
   const token = getTokenFromCookies('Login');
 
   if (!token) {
-    // alert("Anda Belum Login");
+    showAlert("Error", "Anda Belum Login");
     return;
   }
 
@@ -43,7 +43,7 @@ async function searchEmployee() {
     if (data.status === 200) {
       displayEmployeeData([data.data], 'EmployeeDataBody');
     } else {
-      alert(data.message);
+      showAlert("Error", data.message);
     }
   } catch (error) {
     console.error('Error:', error);
@@ -53,5 +53,16 @@ async function searchEmployee() {
 document.getElementById('searchButton').addEventListener('click', searchEmployee);
 
 function editEmployee(employeeId) {
+  showAlert("Info", `Editing employee with ID: ${employeeId}`);
   window.location.href = `update_form.html?employeeid=${employeeId}`;
+}
+
+// Function to show SweetAlert
+function showAlert(title, text, icon = 'info') {
+  Swal.fire({
+    title: title,
+    text: text,
+    icon: icon,
+    confirmButtonText: 'OK',
+  });
 }

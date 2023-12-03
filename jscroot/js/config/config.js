@@ -1,4 +1,5 @@
 import { setCookieWithExpireHour } from 'https://jscroot.github.io/cookie/croot.js';
+import Swal from 'sweetalert2';
 
 //token
 export function getTokenFromAPI() {
@@ -40,22 +41,38 @@ export function PostLogin() {
   return data;
 }
 
-export function AlertPost(value){
-    // alert(value.message + "\nRegistrasi Berhasil")
-    window.location.href= "https://hrmonitor.advocata.me/dashboard/public/pages/login.html"
-}
 
+export function AlertPost(value) {
+  Swal.fire({
+    title: 'Registrasi Berhasil',
+    text: value.message,
+    icon: 'success',
+    confirmButtonText: 'OK',
+  }).then(() => {
+    window.location.href = 'https://hrmonitor.advocata.me/dashboard/public/pages/login.html';
+  });
+}
 
 function ResponsePostLogin(response) {
   if (response && response.token) {
-    // console.log('Token User:', response.token);
     setCookieWithExpireHour('Login', response.token, 2);
-    window.location.href = 'https://hrmonitor.advocata.me/dashboard/public/index.html';
-    // alert("Selamat Datang")
+    Swal.fire({
+      title: 'Selamat Datang',
+      icon: 'success',
+      confirmButtonText: 'OK',
+    }).then(() => {
+      window.location.href = 'https://hrmonitor.advocata.me/dashboard/public/index.html';
+    });
   } else {
-    // alert('Login gagal. Silakan coba lagi.');
+    Swal.fire({
+      title: 'Login Gagal',
+      text: 'Silakan coba lagi.',
+      icon: 'error',
+      confirmButtonText: 'OK',
+    });
   }
 }
+
 
 
 export function ResponsePost(result) {
