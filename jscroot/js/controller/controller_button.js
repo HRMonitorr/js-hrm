@@ -14,15 +14,18 @@ function checkLoginStatus() {
   const token = getTokenFromCookies('Login'); // Ganti 'user_token' dengan nama cookie yang sesuai
 
   const pagesMenu = document.getElementById('pagesMenu');
-  const loginPage = document.getElementById('loginPage');
+  const logout = document.getElementById('logoutid');
   const registerPage = document.getElementById('registerPage');
 
   if (token) {
     // Jika ada token, pengguna sudah login. Sembunyikan halaman login dan register.
     pagesMenu.style.display = 'none';
+    // display logout
+    logout.style.display ='block';
   } else {
     // Jika tidak ada token, pengguna belum login. Tampilkan halaman login dan register.
     pagesMenu.style.display = 'block';
+    logout.style.display ='none';
   }
 }
 
