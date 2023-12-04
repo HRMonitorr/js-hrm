@@ -2,15 +2,6 @@
 async function getUserWithToken() {
   const token = getTokenFromCookies('Login');
 
-  if (!token) {
-    Swal.fire({
-      icon: 'warning',
-      title: 'Authentication Error',
-      text: 'Token not found.',
-    });
-    return;
-  }
-
   const targetURL = 'https://asia-southeast2-gis-project-401902.cloudfunctions.net/GetUserWithToken';
 
   // Set up headers with the token
