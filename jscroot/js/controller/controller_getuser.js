@@ -1,4 +1,3 @@
-// Function to make the API request with the token
 async function getUserWithToken() {
   const token = getTokenFromCookies('Login');
 
@@ -13,7 +12,6 @@ async function getUserWithToken() {
 
   const targetURL = 'https://asia-southeast2-gis-project-401902.cloudfunctions.net/GetUserWithToken';
 
-  // Set up headers with the token
   const myHeaders = new Headers();
   myHeaders.append('Login', token);
 
@@ -41,7 +39,6 @@ async function getUserWithToken() {
   }
 }
 
-// Function to extract the token from cookies
 function getTokenFromCookies(cookieName) {
   const cookies = document.cookie.split(';');
   for (const cookie of cookies) {
@@ -55,7 +52,6 @@ function getTokenFromCookies(cookieName) {
 }
 
 
-// Function to display user data in the table
 function displayUserData(userData) {
   const userDataBody = document.getElementById('userDataBody');
 

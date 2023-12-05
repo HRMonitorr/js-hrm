@@ -241,5 +241,4 @@ const displayEmployeeData = (employeeData, tableBodyId) => {
   }
 };
 
-// Initial fetch of all employees
 getAllEmployees();

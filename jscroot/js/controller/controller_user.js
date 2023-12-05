@@ -1,4 +1,3 @@
-// Function to make the API request with the token
 async function getUserWithToken() {
   const token = getTokenFromCookies('Login');
 
@@ -32,7 +31,51 @@ async function getUserWithToken() {
   }
 }
 
-// Function to extract the token from cookies
+async function deleteUser(usernameToDelete) {
+  const deleteApiUrl = 'https://asia-southeast2-gis-project-401902.cloudfunctions.net/deleteuser';
+
+  const token = getTokenFromCookies('Login');
+
+  if (!token) {
+    showAlert("Token tidak ditemukan", 'error');
+    return;
+  }
+
+  const deleteRequestOptions = {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Login': token, 
+    },
+    body: JSON.stringify({
+      Username: usernameToDelete,
+    }),
+  };
+
+  try {
+    const response = await fetch(deleteApiUrl, deleteRequestOptions);
+    const data = await response.json();
+
+    if (data.status === true) {
+      showAlert('User deleted successfully.', 'success');
+      window.location.href = 'tables_emp.html';
+    } else {
+      showAlert(data.message, 'error');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+const showAlert = (message, type = 'info') => {
+  Swal.fire({
+    icon: type,
+    text: message,
+    showConfirmButton: false,
+    timer: 1500
+  });
+};
+
 function getTokenFromCookies(cookieName) {
   const cookies = document.cookie.split(';');
   for (const cookie of cookies) {
@@ -44,7 +87,6 @@ function getTokenFromCookies(cookieName) {
   return null;
 }
 
-// Function to display user data in the table
 function displayUserData(userData) {
   const userDataBody = document.getElementById('userDataBody');
 
@@ -68,7 +110,6 @@ function displayUserData(userData) {
       `;
       userDataBody.appendChild(newRow);
 
-      // Add event listener for delete link
       const deleteLink = newRow.querySelector('.delete-link');
       deleteLink.addEventListener('click', (event) => {
         event.preventDefault();
@@ -81,7 +122,6 @@ function displayUserData(userData) {
   }
 }
 
-// Function to confirm user deletion
 function confirmDeleteUser(usernameToDelete) {
   Swal.fire({
     title: 'Are you sure?',
@@ -97,45 +137,5 @@ function confirmDeleteUser(usernameToDelete) {
     }
   });
 }
-
-// Function to delete user by username
-async function deleteUser(usernameToDelete) {
-  const deleteApiUrl = 'https://asia-southeast2-gis-project-401902.cloudfunctions.net/deleteuser';
-
-  const deleteRequestOptions = {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      Username: usernameToDelete,
-    }),
-  };
-
-  try {
-    const response = await fetch(deleteApiUrl, deleteRequestOptions);
-    const data = await response.json();
-
-    if (data.status === true) {
-      showAlert('User deleted successfully.', 'success');
-      // Redirect to a specific page after deletion
-      window.location.href = 'tables_emp.html';
-    } else {
-      showAlert(data.message, 'error');
-    }
-  } catch (error) {
-    console.error('Error:', error);
-  }
-}
-
-// Function to show SweetAlert
-const showAlert = (message, type = 'info') => {
-  Swal.fire({
-    icon: type,
-    text: message,
-    showConfirmButton: false,
-    timer: 1500
-  });
-};
 
 getUserWithToken();
