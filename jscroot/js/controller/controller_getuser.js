@@ -43,7 +43,6 @@ function getTokenFromCookies(cookieName) {
   const cookies = document.cookie.split(';');
   for (const cookie of cookies) {
     const [name, value] = cookie.trim().split('=');
-    console.log('Cookie:', name, value);
     if (name === cookieName) {
       return value;
     }
