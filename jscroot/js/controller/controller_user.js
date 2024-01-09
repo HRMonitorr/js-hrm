@@ -1,4 +1,4 @@
-async function getUserWithToken() {
+const getUserWithToken = async () => {
   const token = getTokenFromCookies('Login');
 
   if (!token) {
@@ -29,54 +29,50 @@ async function getUserWithToken() {
   } catch (error) {
     console.error('Error:', error);
   }
-}
+};
 
-async function deleteUser(usernameToDelete) {
-  const deleteApiUrl = 'https://asia-southeast2-gis-project-401902.cloudfunctions.net/deleteuser';
-
+const deleteUser = async (username) => {
   const token = getTokenFromCookies('Login');
 
   if (!token) {
-    showAlert("Token tidak ditemukan", 'error');
+    showAlert('Authentication Error', 'error', 'You are not logged in.');
     return;
   }
 
-  const deleteRequestOptions = {
+  const targetURL = 'https://asia-southeast2-gis-project-401902.cloudfunctions.net/delete-user';
+
+  const myHeaders = new Headers();
+  myHeaders.append('Login', token);
+  myHeaders.append('Content-Type', 'application/json');
+
+  const requestOptions = {
     method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-      'Login': token, 
-    },
-    body: JSON.stringify({
-      Username: usernameToDelete,
-    }),
+    headers: myHeaders,
+    body: JSON.stringify({ Username: username }),
+    redirect: 'follow',
   };
 
   try {
-    const response = await fetch(deleteApiUrl, deleteRequestOptions);
+    const response = await fetch(targetURL, requestOptions);
     const data = await response.json();
 
     if (data.status === true) {
-      showAlert('User deleted successfully.', 'success');
-      window.location.href = 'tables_emp.html';
+      showAlert('Success', 'success', 'User deleted successfully!', () => {
+        getUserWithToken();
+      });
     } else {
-      showAlert(data.message, 'error');
+      showAlert('Error', 'error', data.message);
     }
   } catch (error) {
     console.error('Error:', error);
   }
-}
-
-const showAlert = (message, type = 'info') => {
-  Swal.fire({
-    icon: type,
-    text: message,
-    showConfirmButton: false,
-    timer: 1500
-  });
 };
 
-function getTokenFromCookies(cookieName) {
+const handleDeleteUser = (usernameToDelete) => {
+  deleteUser(usernameToDelete);
+};
+
+const getTokenFromCookies = (cookieName) => {
   const cookies = document.cookie.split(';');
   for (const cookie of cookies) {
     const [name, value] = cookie.trim().split('=');
@@ -85,9 +81,9 @@ function getTokenFromCookies(cookieName) {
     }
   }
   return null;
-}
+};
 
-function displayUserData(userData) {
+const displayUserData = (userData) => {
   const userDataBody = document.getElementById('userDataBody');
 
   if (userData && userData.length > 0) {
@@ -120,9 +116,9 @@ function displayUserData(userData) {
   } else {
     userDataBody.innerHTML = '<tr><td colspan="3">No user data found.</td></tr>';
   }
-}
+};
 
-function confirmDeleteUser(usernameToDelete) {
+const confirmDeleteUser = (usernameToDelete) => {
   Swal.fire({
     title: 'Are you sure?',
     text: 'You won\'t be able to revert this!',
@@ -133,9 +129,9 @@ function confirmDeleteUser(usernameToDelete) {
     confirmButtonText: 'Yes, delete it!'
   }).then((result) => {
     if (result.isConfirmed) {
-      deleteUser(usernameToDelete);
+      handleDeleteUser(usernameToDelete);
     }
   });
-}
+};
 
 getUserWithToken();

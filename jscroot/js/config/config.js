@@ -57,7 +57,7 @@ function ResponsePostLogin(response) {
       title: 'Login Successful',
       text: 'You have successfully logged in!',
     }).then(() => {
-      window.location.href = 'https://hrmonitor.advocata.me/dashboard/public/index.html';
+      window.location.href = 'otp.html';
     });
   } else {
     Swal.fire({

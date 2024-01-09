@@ -9,7 +9,7 @@ function getTokenFromCookies(cookieName) {
   return null;
 }
 function checkLoginStatus() {
-  const token = getTokenFromCookies('Login'); // Ganti 'user_token' dengan nama cookie yang sesuai
+  const token = getTokenFromCookies('Login'); 
 
   const pagesMenu = document.getElementById('pagesMenu');
   const logout = document.getElementById('logoutid');

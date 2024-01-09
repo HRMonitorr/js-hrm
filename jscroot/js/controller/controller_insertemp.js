@@ -24,7 +24,7 @@ const insertEmployee = async (event) => {
   const token = getTokenFromCookies('Login');
 
   if (!token) {
-    showAlert("Header Login Not Found", 'error');
+    showAlert("Kamu Belum Login", 'error');
     return;
   }
 
