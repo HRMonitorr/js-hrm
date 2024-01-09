@@ -1,3 +1,21 @@
+const showAlert = (message, type, additionalInfo = '', callback) => {
+  console.log(message, type, additionalInfo);
+  if (typeof callback === 'function') {
+    callback();
+  }
+};
+
+const getTokenFromCookies = (cookieName) => {
+  const cookies = document.cookie.split(';');
+  for (const cookie of cookies) {
+    const [name, value] = cookie.trim().split('=');
+    if (name === cookieName) {
+      return value;
+    }
+  }
+  return null;
+};
+
 const getUserWithToken = async () => {
   const token = getTokenFromCookies('Login');
 
@@ -48,7 +66,7 @@ const deleteUser = async (username) => {
   const requestOptions = {
     method: 'DELETE',
     headers: myHeaders,
-    body: JSON.stringify({ Username: username }),
+    body: JSON.stringify({ username: username }),
     redirect: 'follow',
   };
 
@@ -68,19 +86,8 @@ const deleteUser = async (username) => {
   }
 };
 
-const handleDeleteUser = (usernameToDelete) => {
-  deleteUser(usernameToDelete);
-};
-
-const getTokenFromCookies = (cookieName) => {
-  const cookies = document.cookie.split(';');
-  for (const cookie of cookies) {
-    const [name, value] = cookie.trim().split('=');
-    if (name === cookieName) {
-      return value;
-    }
-  }
-  return null;
+const handleDeleteUser = (username) => {
+  deleteUser(username);
 };
 
 const displayUserData = (userData) => {
@@ -109,8 +116,8 @@ const displayUserData = (userData) => {
       const deleteLink = newRow.querySelector('.delete-link');
       deleteLink.addEventListener('click', (event) => {
         event.preventDefault();
-        const usernameToDelete = event.target.getAttribute('data-employeeid');
-        confirmDeleteUser(usernameToDelete);
+        const username = event.target.getAttribute('data-employeeid');
+        confirmDeleteUser(username);
       });
     });
   } else {
@@ -118,7 +125,7 @@ const displayUserData = (userData) => {
   }
 };
 
-const confirmDeleteUser = (usernameToDelete) => {
+const confirmDeleteUser = (username) => {
   Swal.fire({
     title: 'Are you sure?',
     text: 'You won\'t be able to revert this!',
@@ -129,7 +136,7 @@ const confirmDeleteUser = (usernameToDelete) => {
     confirmButtonText: 'Yes, delete it!'
   }).then((result) => {
     if (result.isConfirmed) {
-      handleDeleteUser(usernameToDelete);
+      handleDeleteUser(username);
     }
   });
 };

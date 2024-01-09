@@ -12,7 +12,7 @@ function checkLoginStatus() {
   const token = getTokenFromCookies('Login'); 
 
   const pagesMenu = document.getElementById('pagesMenu');
-  const logout = document.getElementById('logoutid');
+  const logout = document.getElementById('logoutButton');
   const registerPage = document.getElementById('registerPage');
 
   if (token) {
