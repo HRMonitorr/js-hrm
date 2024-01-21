@@ -49,25 +49,6 @@ export function AlertPost(value) {
   });
 }
 
-// function ResponsePostLogin(response) {
-//   if (response && response.token) {
-//     setCookieWithExpireHour('Login', response.token, 2);
-//     Swal.fire({
-//       icon: 'success',
-//       title: 'Login Successful',
-//       text: 'You have successfully logged in!',
-//     }).then(() => {
-//       window.location.href = 'otp.html';
-//     });
-//   } else {
-//     Swal.fire({
-//       icon: 'error',
-//       title: 'Login Failed',
-//       text: 'Invalid username, password, or role. Please try again.',
-//     });
-//   }
-// }
-
 export function ResponseLogin(result) {
   if (result.status) {
     // Jika login berhasil, tampilkan SweetAlert sukses
@@ -75,11 +56,8 @@ export function ResponseLogin(result) {
       icon: "success",
       title: "Login Successful",
       text: "Redirecting to OTP page...",
-      showConfirmButton: false,
-      timer: 2000, // Set timer to 2 seconds (adjust as needed)
-      onClose: () => {
-        window.location.href = "otp.html"; // Redirect to otp.html
-      },
+    }).then(() => {
+      window.location.href = 'otp.html';
     });
   } else {
     // Jika login gagal, tampilkan SweetAlert error
