@@ -1,17 +1,17 @@
 import { setCookieWithExpireHour } from 'https://jscroot.github.io/cookie/croot.js';
 
-export function getTokenFromAPI() {
-  const tokenUrl = "https://asia-southeast2-gis-project-401902.cloudfunctions.net/Login";
-  fetch(tokenUrl)
-    .then(response => response.json())
-    .then(tokenData => {
-      if (tokenData.token) {
-        userToken = tokenData.token;
-        console.log('Token from API:', userToken);
-      }
-    })
-    .catch(error => console.error('Failed to fetch token:', error));
-}
+// export function getTokenFromAPI() {
+//   const tokenUrl = "https://asia-southeast2-gis-project-401902.cloudfunctions.net/Login";
+//   fetch(tokenUrl)
+//     .then(response => response.json())
+//     .then(tokenData => {
+//       if (tokenData.token) {
+//         userToken = tokenData.token;
+//         console.log('Token from API:', userToken);
+//       }
+//     })
+//     .catch(error => console.error('Failed to fetch token:', error));
+// }
 
 export function GetDataForm() {
   const username = document.querySelector("#username").value;
@@ -68,10 +68,29 @@ function ResponsePostLogin(response) {
   }
 }
 
-export function ResponsePost(result) {
-  AlertPost(result);
+export function ResponseLogin(result) {
+  if (result.success) {
+    // Jika login berhasil, tampilkan SweetAlert sukses
+    Swal.fire({
+      icon: "success",
+      title: "Login Successful",
+      text: "Redirecting to OTP page...",
+      showConfirmButton: false,
+      timer: 2000, // Set timer to 2 seconds (adjust as needed)
+      onClose: () => {
+        window.location.href = "otp.html"; // Redirect to otp.html
+      },
+    });
+  } else {
+    // Jika login gagal, tampilkan SweetAlert error
+    Swal.fire({
+      icon: "error",
+      title: "Login Failed",
+      text: result.message, // Display the error message received from the server
+    });
+  }
 }
 
-export function ResponseLogin(result) {
-  ResponsePostLogin(result);
+export function ResponsePost(result) {
+  AlertPost(result);
 }
