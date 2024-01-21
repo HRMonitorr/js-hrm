@@ -1,17 +1,8 @@
-const getTokenFromCookies = (cookieName) => {
-  const cookies = document.cookie.split(';');
-  for (const cookie of cookies) {
-    const [name, value] = cookie.trim().split('=');
-    if (name === cookieName) {
-      return value;
-    }
-  }
-  return null;
-};
+import { getTokenFromCookies } from "../template/template.js";
 
-const showAlert = (message) => {
+const showAlert = (message, icon = 'success') => {
   Swal.fire({
-    icon: 'success',
+    icon: icon,
     text: message,
     showConfirmButton: false,
     timer: 1500
@@ -19,7 +10,6 @@ const showAlert = (message) => {
     window.location.href = 'tables_emp.html';
   });
 };
-
 
 const searchEmployeeById = async (employeeId) => {
   const token = getTokenFromCookies('Login');
@@ -63,9 +53,8 @@ const populateForm = (employeeData) => {
   setValue('nameInput', employeeData.name);
   setValue('emailInput', employeeData.email);
   setValue('phoneInput', employeeData.phone);
-  setValue('divisionInput', employeeData.division.divName);
-  setValue('usernameInput', employeeData.account.username);
-  setValue('passwordInput', employeeData.account.password);
+  setValue('divisionInput', employeeData.division.DivName);
+  setValue('usernameInput', employeeData.username); 
   setValue('basicSalaryInput', employeeData.salary['basic-salary']);
   setValue('honorDivisionInput', employeeData.salary['honor-division']);
 
@@ -105,10 +94,10 @@ const updateEmployee = async (event) => {
       name: document.getElementById('nameInput').value,
       email: document.getElementById('emailInput').value,
       phone: document.getElementById('phoneInput').value,
-      division: { divName: document.getElementById('divisionInput').value },
-      account: {
-        username: document.getElementById('usernameInput').value,
-        password: document.getElementById('passwordInput').value,
+      username: document.getElementById('usernameInput').value,
+      division: {
+        DivId: 0, // You may need to adjust this value based on your requirements
+        DivName: document.getElementById('divisionInput').value,
       },
       salary: {
         'basic-salary': parseInt(basicSalaryInput),

@@ -1,21 +1,11 @@
+import { getTokenFromCookies } from "../template/template.js";
+
 const showAlert = (message, type, additionalInfo = '', callback) => {
   console.log(message, type, additionalInfo);
   if (typeof callback === 'function') {
     callback();
   }
 };
-
-const getTokenFromCookies = (cookieName) => {
-  const cookies = document.cookie.split(';');
-  for (const cookie of cookies) {
-    const [name, value] = cookie.trim().split('=');
-    if (name === cookieName) {
-      return value;
-    }
-  }
-  return null;
-};
-
 const getUserWithToken = async () => {
   const token = getTokenFromCookies('Login');
 
