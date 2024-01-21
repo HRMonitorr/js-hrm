@@ -16,11 +16,13 @@ export function getTokenFromAPI() {
 export function GetDataForm() {
   const username = document.querySelector("#username").value;
   const password = document.querySelector("#password").value;
+  const phone = document.querySelector("#phone-num").value;
   const role = document.querySelector("#role").value;
 
   const data = {
     username: username,
     password: password,
+    phone : phone,
     role: role
   };
   return data;
@@ -29,12 +31,10 @@ export function GetDataForm() {
 export function PostLogin() {
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
-  const role = document.getElementById("role").value;
 
   const data = {
     username: username,
     password: password,
-    role: role
   };
   return data;
 }
