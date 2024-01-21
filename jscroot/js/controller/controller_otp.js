@@ -1,69 +1,66 @@
 import { setCookieWithExpireHour } from 'https://jscroot.github.io/cookie/croot.js';
 
-const showAlert = (message, type = 'success') => {
-  Swal.fire({
-    icon: type,
-    text: message,
-    showConfirmButton: false,
-    timer: 1500
-  });
-};
+const form = document.getElementById('formotp');
 
-const insertOTP = async (event) => {
+form.addEventListener('submit', async (event) => {
   event.preventDefault();
 
-  const token = getTokenFromCookies('Login');
+  const otpCodeInput = document.getElementById('otp-code');
+  const otpCode = otpCodeInput.value.trim();
 
-  if (!token) {
-    showAlert("Kamu Belum Login", 'error');
+  if (!otpCode) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: 'Please enter the OTP code',
+    });
     return;
   }
 
-  const targetURL = 'https://example.com/your-endpoint'; 
-  const myHeaders = new Headers();
-  myHeaders.append('Login', token);
-  myHeaders.append('Content-Type', 'application/json');
-
-  const requestOptions = {
-    method: 'POST',
-    headers: myHeaders,
-    body: JSON.stringify({
-      otpsatu: document.getElementById('otpsatu').value,
-      otpdua: document.getElementById('otpdua').value,
-      otptiga: document.getElementById('otptiga').value,
-      otpempat: document.getElementById('otpempat').value,
-    }),
-    redirect: 'follow',
-  };
+  const apiUrl = 'https://asia-southeast2-gis-project-401902.cloudfunctions.net/loginafterotp';
 
   try {
-    const response = await fetch(targetURL, requestOptions);
-    const responseData = await response.json();
+    const response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        'otp-code': otpCode,
+      }),
+    });
 
-    if (responseData && responseData.token) {
-      setCookieWithExpireHour('Login', responseData.token, 2);
-      showAlert({
+    if (!response.ok) {
+      throw new Error(`API request failed with status ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    if (data.status) {
+      // Set token in cookies with 2-hour expiration
+      setCookieWithExpireHour('token', data.token, 2);
+
+      Swal.fire({
         icon: 'success',
-        title: 'Kode Otp Valid',
-        text: 'Otp Berhasil!'
-      }, () => {
-        window.location.href = 'https://hrmonitor.advocata.me/dashboard/public/index.html';
+        title: 'Success',
+        text: data.message,
       });
+
+      // You can handle the successful login here, e.g., redirect to another page
+      window.location.href = 'https://hrmonitor.advocata.me/dashboard/public/index.html';
     } else {
-      showAlert({
+      Swal.fire({
         icon: 'error',
-        title: 'Token Salah',
-        text: 'Invalid Token. Please try again.'
+        title: 'Error',
+        text: data.message,
       });
     }
   } catch (error) {
-    console.error('Error:', error);
-    showAlert({
+    console.error('Error during API request:', error);
+    Swal.fire({
       icon: 'error',
       title: 'Error',
-      text: 'An error occurred. Please try again.'
+      text: 'An unexpected error occurred. Please try again later.',
     });
   }
-};
-
-document.getElementById('formotp').addEventListener('submit', insertOTP);
+});
