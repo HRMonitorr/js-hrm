@@ -1,3 +1,5 @@
+import { getTokenFromCookies } from "../template/template.js";
+
 async function getUserWithToken() {
   const token = getTokenFromCookies('Login');
 
@@ -37,17 +39,6 @@ async function getUserWithToken() {
   } catch (error) {
     console.error('Error:', error);
   }
-}
-
-function getTokenFromCookies(cookieName) {
-  const cookies = document.cookie.split(';');
-  for (const cookie of cookies) {
-    const [name, value] = cookie.trim().split('=');
-    if (name === cookieName) {
-      return value;
-    }
-  }
-  return null;
 }
 
 

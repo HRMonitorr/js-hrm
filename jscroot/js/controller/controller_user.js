@@ -97,10 +97,11 @@ const displayUserData = (userData) => {
         <td class="px-4 py-3 text-sm">
           <p class="font-semibold">${user.password}</p>
         </td>
-        <td class="px-4 py-3">
-          <a href="#" class="delete-link" data-employeeid="${user.username}">Delete</a>
-        </td>
+      
       `;
+    //   <td class="px-4 py-3">
+    //   <a href="#" class="delete-link" data-employeeid="${user.username}">Delete</a>
+    // </td>
       userDataBody.appendChild(newRow);
 
       const deleteLink = newRow.querySelector('.delete-link');
