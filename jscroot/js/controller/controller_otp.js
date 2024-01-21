@@ -38,7 +38,7 @@ form.addEventListener('submit', async (event) => {
 
     if (data.status) {
       // Set token in cookies with 2-hour expiration
-      setCookieWithExpireHour('token', data.token, 2);
+      setCookieWithExpireHour('Login', data.token, 2);
 
       Swal.fire({
         icon: 'success',
