@@ -49,27 +49,27 @@ export function AlertPost(value) {
   });
 }
 
-function ResponsePostLogin(response) {
-  if (response && response.token) {
-    setCookieWithExpireHour('Login', response.token, 2);
-    Swal.fire({
-      icon: 'success',
-      title: 'Login Successful',
-      text: 'You have successfully logged in!',
-    }).then(() => {
-      window.location.href = 'otp.html';
-    });
-  } else {
-    Swal.fire({
-      icon: 'error',
-      title: 'Login Failed',
-      text: 'Invalid username, password, or role. Please try again.',
-    });
-  }
-}
+// function ResponsePostLogin(response) {
+//   if (response && response.token) {
+//     setCookieWithExpireHour('Login', response.token, 2);
+//     Swal.fire({
+//       icon: 'success',
+//       title: 'Login Successful',
+//       text: 'You have successfully logged in!',
+//     }).then(() => {
+//       window.location.href = 'otp.html';
+//     });
+//   } else {
+//     Swal.fire({
+//       icon: 'error',
+//       title: 'Login Failed',
+//       text: 'Invalid username, password, or role. Please try again.',
+//     });
+//   }
+// }
 
 export function ResponseLogin(result) {
-  if (result.success) {
+  if (result.status) {
     // Jika login berhasil, tampilkan SweetAlert sukses
     Swal.fire({
       icon: "success",
@@ -90,6 +90,7 @@ export function ResponseLogin(result) {
     });
   }
 }
+
 
 export function ResponsePost(result) {
   AlertPost(result);
