@@ -33,7 +33,7 @@ document.getElementById('commitLifetimeForm').addEventListener('submit', async (
       });
   
       const data = await response.json();
-      console.log('Response Data:', data);
+    //   console.log('Response Data:', data);
   
       if (data.status === 200) {
         displayCommitData(data.data);
