@@ -53,7 +53,7 @@ const populateForm = (employeeData) => {
   setValue('nameInput', employeeData.name);
   setValue('emailInput', employeeData.email);
   setValue('phoneInput', employeeData.phone);
-  setValue('divisionInput', employeeData.division.DivName);
+  setValue('divisionInput', employeeData.division['divName']);
   setValue('usernameInput', employeeData.username); 
   setValue('basicSalaryInput', employeeData.salary['basic-salary']);
   setValue('honorDivisionInput', employeeData.salary['honor-division']);
