@@ -64,29 +64,21 @@ document.getElementById('commitLifetimeForm').addEventListener('submit', async (
   
     commitData.forEach(commit => {
       const row = `
-      <tr
-      class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-        <td class="px-4 py-3">
-        <div class="flex items-center text-sm">
-          <div>
-            <p class="font-semibold">${commit.author}</p>
-          </div>
-        </div>
-      </td>
-      <td class="px-4 py-3 text-sm">
-        <p class="font-semibold">${commit.repos}</p>
-      </td>
-      <td class="px-4 py-3 text-sm">
+        <tr>
+        <td class="px-4 py-3 text-sm">
+          <p class="font-semibold">${commit.author}</p>
+        </td>
+        <td class="px-4 py-3 text-sm">
+          <p class="font-semibold">${commit.repos}</p>
+        </td>
+        <td class="px-4 py-3 text-sm">
         <p class="font-semibold">${commit.email}</p>
       </td>
       <td class="px-4 py-3 text-sm">
-        ${commit.comment}
+        <p class="font-semibold">${commit.comment}</p>
       </td>
-      <td class="px-4 py-3 text-xs">
-        <span
-          class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
-          ${author.date}
-        </span>
+      <td class="px-4 py-3 text-sm">
+        <p class="font-semibold">${commit.date}</p>
       </td>
         </tr>
       `;
