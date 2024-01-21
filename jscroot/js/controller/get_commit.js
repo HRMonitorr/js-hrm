@@ -1,3 +1,5 @@
+import { getTokenFromCookies } from "../template/template.js";
+
 document.getElementById('commitLifetimeForm').addEventListener('submit', async (event) => {
     event.preventDefault();
   
@@ -84,16 +86,5 @@ document.getElementById('commitLifetimeForm').addEventListener('submit', async (
       `;
       tableBody.insertAdjacentHTML('beforeend', row);
     });
-  }
-  
-  function getTokenFromCookies(cookieName) {
-    const cookies = document.cookie.split(';');
-    for (const cookie of cookies) {
-      const [name, value] = cookie.trim().split('=');
-      if (name === cookieName) {
-        return value;
-      }
-    }
-    return null;
   }
   
