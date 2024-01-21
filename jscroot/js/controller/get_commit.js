@@ -1,11 +1,11 @@
 document.getElementById('commitLifetimeForm').addEventListener('submit', async (event) => {
     event.preventDefault();
-
+  
     const ownerName = document.getElementById('ownerName').value;
     const repoName = document.getElementById('repoName').value;
-
+  
     const token = getTokenFromCookies('Login');
-
+  
     if (!token) {
       await Swal.fire({
         icon: 'warning',
@@ -14,12 +14,12 @@ document.getElementById('commitLifetimeForm').addEventListener('submit', async (
       });
       return;
     }
-
+  
     const requestBody = {
       ownerName,
       repoName,
     };
-
+  
     try {
       const response = await fetch('https://asia-southeast2-gis-project-401902.cloudfunctions.net/commit-lifetime', {
         method: 'POST',
@@ -29,13 +29,13 @@ document.getElementById('commitLifetimeForm').addEventListener('submit', async (
         },
         body: JSON.stringify(requestBody),
       });
-
+  
       const data = await response.json();
       console.log('Response Data:', data);
-
+  
       if (data.status === 200) {
         displayCommitData(data.data);
-
+  
         await Swal.fire({
           icon: 'success',
           title: 'Success',
@@ -53,11 +53,29 @@ document.getElementById('commitLifetimeForm').addEventListener('submit', async (
       await Swal.fire({
         icon: 'error',
         title: 'Error',
-        text: 'An error occurred while processing your request.',
+        text: 'An unexpected error occurred. Please try again later.',
       });
     }
   });
-
+  
+  function displayCommitData(commitData) {
+    const tableBody = document.getElementById('commitTableBody');
+    tableBody.innerHTML = ''; // Clear existing data
+  
+    commitData.forEach(commit => {
+      const row = `
+        <tr>
+          <td>${commit.author}</td>
+          <td>${commit.repository}</td>
+          <td>${commit.email}</td>
+          <td>${commit.comment}</td>
+          <td>${commit.date}</td>
+        </tr>
+      `;
+      tableBody.insertAdjacentHTML('beforeend', row);
+    });
+  }
+  
   function getTokenFromCookies(cookieName) {
     const cookies = document.cookie.split(';');
     for (const cookie of cookies) {
@@ -68,26 +86,4 @@ document.getElementById('commitLifetimeForm').addEventListener('submit', async (
     }
     return null;
   }
-
-  function displayCommitData(commitData) {
-    const commitTableBody = document.querySelector('#commitTable tbody');
-    commitTableBody.innerHTML = '';
-
-    if (commitData && commitData.length > 0) {
-      commitData.forEach((commit) => {
-        const newRow = document.createElement('tr');
-        newRow.innerHTML = `
-          <td>${commit.author}</td>
-          <td><a href="${commit.repos}" target="_blank">${commit.repos}</a></td>
-          <td>${commit.email}</td>
-          <td>${commit.comment}</td>
-          <td>${commit.date}</td>
-        `;
-        commitTableBody.appendChild(newRow);
-      });
-    } else {
-      const newRow = document.createElement('tr');
-      newRow.innerHTML = '<td colspan="5">No commit data found.</td>';
-      commitTableBody.appendChild(newRow);
-    }
-  }
+  
