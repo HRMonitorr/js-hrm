@@ -37,7 +37,6 @@ form.addEventListener('submit', async (event) => {
     const data = await response.json();
 
     if (data.status) {
-      // Set token in cookies with 2-hour expiration
       setCookieWithExpireHour('Login', data.token, 2);
 
       Swal.fire({
@@ -46,7 +45,6 @@ form.addEventListener('submit', async (event) => {
         text: data.message,
       });
 
-      // You can handle the successful login here, e.g., redirect to another page
       window.location.href = 'https://hrmonitor.advocata.me/dashboard/public/index.html';
     } else {
       Swal.fire({
