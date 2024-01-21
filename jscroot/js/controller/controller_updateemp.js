@@ -111,12 +111,12 @@ const updateEmployee = async (event) => {
     const response = await fetch(targetURL, requestOptions);
     const data = await response.json();
 
-    if (data.status === 200) {
-      showAlert('Berhasil Update Data', 'Data telah berhasil diperbarui');
+    if (data.status) {
+      showAlert('Berhasil Update Data', 'Data telah berhasil diperbarui.', 'success');
+      window.location.href = 'tables_emp.html';
     } else {
-      showAlert('Gagal Update Data', 'Terjadi kesalahan saat mengupdate data. Silakan coba lagi.');
+      showAlert('Gagal Update Data', data.message || 'Terjadi kesalahan saat mengupdate data. Silakan coba lagi.', 'error');
     }
-    
   } catch (error) {
     console.error('Error:', error);
   }
