@@ -96,7 +96,7 @@ const updateEmployee = async (event) => {
       phone: document.getElementById('phoneInput').value,
       username: document.getElementById('usernameInput').value,
       division: {
-        DivId: 0, // You may need to adjust this value based on your requirements
+        DivId: 0, 
         DivName: document.getElementById('divisionInput').value,
       },
       salary: {
