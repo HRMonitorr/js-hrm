@@ -22,7 +22,7 @@ export function GetDataForm() {
   const data = {
     username: username,
     password: password,
-    phone : phone,
+    "phone-num": phone,
     role: role
   };
   return data;
