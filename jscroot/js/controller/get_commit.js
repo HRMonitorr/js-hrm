@@ -66,7 +66,7 @@ document.getElementById('commitLifetimeForm').addEventListener('submit', async (
       const row = `
         <tr>
           <td>${commit.author}</td>
-          <td>${commit.repository}</td>
+          <td>${commit.repos}</td>
           <td>${commit.email}</td>
           <td>${commit.comment}</td>
           <td>${commit.date}</td>
