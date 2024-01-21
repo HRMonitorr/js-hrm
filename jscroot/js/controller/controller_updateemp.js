@@ -1,29 +1,13 @@
 import { getTokenFromCookies } from "../template/template.js";
 
-const showAlert = (message, type = 'success') => {
-  let iconClass;
-
-  switch (type) {
-    case 'success':
-      iconClass = 'success';
-      break;
-    case 'error':
-      iconClass = 'error';
-      break;
-    // Tambahkan case lain jika diperlukan
-    default:
-      iconClass = 'info';
-  }
-
+const showAlert = (message, icon = 'success') => {
   Swal.fire({
-    icon: iconClass,
+    icon: icon,
     text: message,
     showConfirmButton: false,
     timer: 1500
   }).then(() => {
-    if (type === 'success') {
-      window.location.href = 'tables_emp.html';
-    }
+    window.location.href = 'tables_emp.html';
   });
 };
 
@@ -70,7 +54,7 @@ const populateForm = (employeeData) => {
   setValue('emailInput', employeeData.email);
   setValue('phoneInput', employeeData.phone);
   setValue('divisionInput', employeeData.division['divName']);
-  setValue('usernameInput', employeeData.username);
+  setValue('usernameInput', employeeData.username); 
   setValue('basicSalaryInput', employeeData.salary['basic-salary']);
   setValue('honorDivisionInput', employeeData.salary['honor-division']);
 
@@ -112,7 +96,7 @@ const updateEmployee = async (event) => {
       phone: document.getElementById('phoneInput').value,
       username: document.getElementById('usernameInput').value,
       division: {
-        DivId: 0,
+        DivId: 0, 
         DivName: document.getElementById('divisionInput').value,
       },
       salary: {
@@ -128,11 +112,11 @@ const updateEmployee = async (event) => {
     const data = await response.json();
 
     if (data.status === 200) {
-      showAlert('Berhasil Update Data', 'success');
-      window.location.href = 'tables_emp.html';
+      showAlert('Berhasil Update Data', 'Data telah berhasil diperbarui');
     } else {
-      showAlert(data.message, 'error');
+      showAlert('Gagal Update Data', 'Terjadi kesalahan saat mengupdate data. Silakan coba lagi.');
     }
+    
   } catch (error) {
     console.error('Error:', error);
   }
