@@ -35,7 +35,7 @@ document.getElementById('commitLifetimeForm').addEventListener('submit', async (
         const data = await response.json();
 
         if (data.status === 200) {
-            displayCommitData(data.data);
+            displayCommitData(data.comment);
             displayCommitChart(data.data);
             await Swal.fire({
                 icon: 'success',
