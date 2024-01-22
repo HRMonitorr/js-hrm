@@ -59,8 +59,8 @@ document.getElementById('commitLifetimeForm').addEventListener('submit', async (
     }
 });
 
-function groupCommitsByDate(commitData) {
-    // Group commits by date and count the number of commits for each day
+function groupCommitsByDay(commitData) {
+    // Group commits by day and count the number of commits for each day
     const commitCounts = {};
     commitData.forEach(commit => {
         const date = commit.date.split('T')[0]; // Extract the date part
@@ -100,8 +100,8 @@ function displayCommitData(commitData) {
 function displayCommitChart(commitData) {
     const ctx = document.getElementById('commitChart').getContext('2d');
 
-    // Group commits by date and count the number of commits for each day
-    const commitCounts = groupCommitsByDate(commitData);
+    // Group commits by day and count the number of commits for each day
+    const commitCounts = groupCommitsByDay(commitData);
 
     // Extract data for the chart
     const labels = Object.keys(commitCounts);
