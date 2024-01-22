@@ -1,3 +1,6 @@
+import { getTokenFromCookies } from "../template/template.js";
+
+
 document.getElementById('commitLifetimeForm').addEventListener('submit', async (event) => {
   event.preventDefault();
 
