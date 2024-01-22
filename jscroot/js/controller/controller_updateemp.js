@@ -81,13 +81,13 @@ const updateEmployee = async (event) => {
   const basicSalaryInput = document.getElementById('basicSalaryInput').value;
   const honorDivisionInput = document.getElementById('honorDivisionInput').value;
 
-  // Validasi untuk memastikan nilai tidak minus
+  // Validasinya tidak boleh - bang
   if (parseInt(basicSalaryInput) < 0 || parseInt(honorDivisionInput) < 0) {
     showAlert('Nilai Basic Salary dan Honor Division tidak boleh negatif.', 'error');
     return;
   }
 
-  // Validasi untuk memastikan kedua field berisi angka
+  // Validasi karakternya harus pake numerik
   if (isNaN(basicSalaryInput) || isNaN(honorDivisionInput)) {
     showAlert('Masukkan nilai numerik yang valid untuk gaji.', 'error');
     return;
