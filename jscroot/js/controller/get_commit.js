@@ -1,3 +1,4 @@
+import { DateTime } from 'luxon';  // Import Luxon library
 import { getTokenFromCookies } from "../template/template.js";
 
 document.getElementById('commitLifetimeForm').addEventListener('submit', async (event) => {
@@ -109,7 +110,7 @@ function displayCommitChart(commitData) {
     const data = Object.values(commitCounts);
 
     const chartData = {
-        labels: labels,
+        labels: labels.map(date => DateTime.fromISO(date).toJSDate()),  // Konversi tanggal menggunakan Luxon
         datasets: [
             {
                 label: 'Commits Per Day',
