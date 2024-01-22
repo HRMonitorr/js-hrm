@@ -54,7 +54,7 @@ const populateForm = (employeeData) => {
   setValue('emailInput', employeeData.email);
   setValue('phoneInput', employeeData.phone);
   setValue('divisionInput', employeeData.division['divName']);
-  setValue('usernameInput', employeeData.username); 
+  setValue('usernameInput', employeeData.username);
   setValue('basicSalaryInput', employeeData.salary['basic-salary']);
   setValue('honorDivisionInput', employeeData.salary['honor-division']);
 
@@ -81,8 +81,15 @@ const updateEmployee = async (event) => {
   const basicSalaryInput = document.getElementById('basicSalaryInput').value;
   const honorDivisionInput = document.getElementById('honorDivisionInput').value;
 
+  // Validasi untuk memastikan nilai tidak minus
+  if (parseInt(basicSalaryInput) < 0 || parseInt(honorDivisionInput) < 0) {
+    showAlert('Nilai Basic Salary dan Honor Division tidak boleh negatif.', 'error');
+    return;
+  }
+
+  // Validasi untuk memastikan kedua field berisi angka
   if (isNaN(basicSalaryInput) || isNaN(honorDivisionInput)) {
-    showAlert('Please enter valid numeric values for salary.', 'error');
+    showAlert('Masukkan nilai numerik yang valid untuk gaji.', 'error');
     return;
   }
 
