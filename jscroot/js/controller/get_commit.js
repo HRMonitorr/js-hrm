@@ -138,7 +138,7 @@ function displayCommitChart(commitData) {
                 anchor: 'end',
                 align: 'top',
                 formatter: function (value, context) {
-                    return value; // Menampilkan nilai sebagai label
+                    return value;
                 },
             },
         },
