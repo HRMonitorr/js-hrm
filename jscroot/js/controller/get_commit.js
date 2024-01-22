@@ -59,13 +59,8 @@ document.getElementById('commitLifetimeForm').addEventListener('submit', async (
     }
 });
 
-function groupCommitsByDay(commitData) {
-    const commitCounts = {};
-    commitData.forEach(commit => {
-        const date = commit.date.split('T')[0];
-        commitCounts[date] = (commitCounts[date] || 0) + 1;
-    });
-    return commitCounts;
+function calculateTotalCommits(commitData) {
+    return commitData.length;
 }
 
 function displayCommitData(commitData) {
@@ -99,17 +94,16 @@ function displayCommitData(commitData) {
 function displayCommitChart(commitData) {
     const ctx = document.getElementById('commitChart').getContext('2d');
 
-    const commitCounts = groupCommitsByDay(commitData);
-    const labels = Object.keys(commitCounts);
-    const data = Object.values(commitCounts);
+    // Hitung total komit dari keseluruhan data
+    const totalCommits = calculateTotalCommits(commitData);
 
     const chartData = {
-        labels: labels,
+        labels: ['Total Commits'],
         datasets: [{
-            label: 'Commits Per Day',
+            label: 'Total Commits',
             borderColor: 'rgb(75, 192, 192)',
             backgroundColor: 'rgba(75, 192, 192, 0.2)',
-            data: data,
+            data: [totalCommits],
         }],
     };
 
@@ -127,7 +121,7 @@ function displayCommitChart(commitData) {
         plugins: {
             title: {
                 display: true,
-                text: 'Number of Commits Per Day',
+                text: 'Total Number of Commits',
                 font: {
                     size: 16,
                 },
