@@ -53,11 +53,13 @@ document.getElementById('commitLifetimeForm').addEventListener('submit', async (
 
         if (data.status === 200) {
             displayCommitData(data.data);
-            displayCommitChart(data.data);
-            await Swal.fire({
-                icon: 'success',
-                title: 'Success',
-                text: data.message,
+            // Panggil fungsi displayCommitChart dengan memberikan data dan callback untuk menampilkan chart
+            displayCommitChart(data.data, () => {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: data.message,
+                });
             });
         } else {
             await Swal.fire({
@@ -85,35 +87,8 @@ function groupCommitsByDay(commitData) {
     return commitCounts;
 }
 
-function displayCommitData(commitData) {
-    const tableBody = document.getElementById('commitTableBody');
-    tableBody.innerHTML = '';
-
-    commitData.forEach(commit => {
-        const row = `
-            <tr>
-                <td class="px-4 py-3 text-sm">
-                    <p class="font-semibold">${commit.author}</p>
-                </td>
-                <td class="px-4 py-3 text-sm">
-                    <p class="font-semibold">${commit.repos}</p>
-                </td>
-                <td class="px-4 py-3 text-sm">
-                    <p class="font-semibold">${commit.email}</p>
-                </td>
-                <td class="px-4 py-3 text-sm">
-                    <p class="font-semibold">${commit.comment}</p>
-                </td>
-                <td class="px-4 py-3 text-sm">
-                    <p class="font-semibold">${commit.date}</p>
-                </td>
-            </tr>
-        `;
-        tableBody.insertAdjacentHTML('beforeend', row);
-    });
-}
-
-function displayCommitChart(commitData) {
+// Tambahkan parameter callback di fungsi displayCommitChart
+function displayCommitChart(commitData, callback) {
     const ctx = document.getElementById('commitChart').getContext('2d');
 
     const commitCounts = groupCommitsByDay(commitData);
@@ -170,9 +145,43 @@ function displayCommitChart(commitData) {
         },
     };
 
+    // Buat dan render chart
     new Chart(ctx, {
         type: 'bar',
         data: chartData,
         options: chartOptions,
+    });
+
+    // Panggil callback setelah render chart
+    if (callback && typeof callback === 'function') {
+        callback();
+    }
+}
+
+function displayCommitData(commitData) {
+    const tableBody = document.getElementById('commitTableBody');
+    tableBody.innerHTML = '';
+
+    commitData.forEach(commit => {
+        const row = `
+            <tr>
+                <td class="px-4 py-3 text-sm">
+                    <p class="font-semibold">${commit.author}</p>
+                </td>
+                <td class="px-4 py-3 text-sm">
+                    <p class="font-semibold">${commit.repos}</p>
+                </td>
+                <td class="px-4 py-3 text-sm">
+                    <p class="font-semibold">${commit.email}</p>
+                </td>
+                <td class="px-4 py-3 text-sm">
+                    <p class="font-semibold">${commit.comment}</p>
+                </td>
+                <td class="px-4 py-3 text-sm">
+                    <p class="font-semibold">${commit.date}</p>
+                </td>
+            </tr>
+        `;
+        tableBody.insertAdjacentHTML('beforeend', row);
     });
 }
