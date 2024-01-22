@@ -6,6 +6,15 @@ document.getElementById('commitLifetimeForm').addEventListener('submit', async (
     const ownerName = document.getElementById('ownerName').value;
     const repoName = document.getElementById('repoName').value;
 
+    if (!ownerName || !repoName) {
+        await Swal.fire({
+            icon: 'warning',
+            title: 'Validation Error',
+            text: 'Please enter both owner and repository names.',
+        });
+        return;
+    }
+
     const token = getTokenFromCookies('Login');
 
     if (!token) {
@@ -16,6 +25,8 @@ document.getElementById('commitLifetimeForm').addEventListener('submit', async (
         });
         return;
     }
+
+    // Tambahkan indikator loading di sini
 
     const requestBody = {
         ownerName,
@@ -32,6 +43,12 @@ document.getElementById('commitLifetimeForm').addEventListener('submit', async (
             body: JSON.stringify(requestBody),
         });
 
+        // Hapus indikator loading di sini
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
         const data = await response.json();
 
         if (data.status === 200) {
@@ -46,7 +63,7 @@ document.getElementById('commitLifetimeForm').addEventListener('submit', async (
             await Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: data.message,
+                text: `Server returned an error: ${data.message}`,
             });
         }
     } catch (error) {
@@ -54,7 +71,7 @@ document.getElementById('commitLifetimeForm').addEventListener('submit', async (
         await Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: 'An unexpected error occurred. Please try again later.',
+            text: `An unexpected error occurred: ${error.message}. Please try again later.`,
         });
     }
 });
@@ -116,12 +133,21 @@ function displayCommitChart(commitData) {
     const chartOptions = {
         scales: {
             x: {
-                type: 'linear',
-                position: 'bottom',
+                type: 'time',
+                time: {
+                    unit: 'day',
+                },
+                title: {
+                    display: true,
+                    text: 'Date',
+                },
             },
             y: {
-                type: 'linear',
-                position: 'left',
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'Number of Commits',
+                },
             },
         },
         plugins: {
