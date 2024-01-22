@@ -1,4 +1,3 @@
-import { DateTime } from 'luxon';  // Import Luxon library
 import { getTokenFromCookies } from "../template/template.js";
 
 document.getElementById('commitLifetimeForm').addEventListener('submit', async (event) => {
@@ -64,15 +63,6 @@ function calculateTotalCommits(commitData) {
     return commitData.length;
 }
 
-function groupCommitsByDay(commitData) {
-    const commitCounts = {};
-    commitData.forEach(commit => {
-        const date = commit.date.split('T')[0];
-        commitCounts[date] = (commitCounts[date] || 0) + 1;
-    });
-    return commitCounts;
-}
-
 function displayCommitData(commitData) {
     const tableBody = document.getElementById('commitTableBody');
     tableBody.innerHTML = '';
@@ -104,54 +94,34 @@ function displayCommitData(commitData) {
 function displayCommitChart(commitData) {
     const ctx = document.getElementById('commitChart').getContext('2d');
 
+    // Hitung total komit dari keseluruhan data
     const totalCommits = calculateTotalCommits(commitData);
-    const commitCounts = groupCommitsByDay(commitData);
-    const labels = Object.keys(commitCounts);
-    const data = Object.values(commitCounts);
 
     const chartData = {
-        labels: labels.map(date => DateTime.fromISO(date).toJSDate()),  // Konversi tanggal menggunakan Luxon
-        datasets: [
-            {
-                label: 'Commits Per Day',
-                borderColor: 'rgb(75, 192, 192)',
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                data: data,
-            },
-            {
-                type: 'line',
-                label: 'Total Commits',
-                borderColor: 'rgb(255, 99, 132)',
-                data: new Array(data.length).fill(totalCommits),
-                fill: false,
-            }
-        ],
+        labels: ['Total Commits'],
+        datasets: [{
+            label: 'Total Commits',
+            borderColor: 'rgb(75, 192, 192)',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            data: [totalCommits],
+        }],
     };
 
     const chartOptions = {
         scales: {
             x: {
-                type: 'time',
-                time: {
-                    unit: 'day',
-                },
-                title: {
-                    display: true,
-                    text: 'Date',
-                },
+                type: 'linear',
+                position: 'bottom',
             },
             y: {
-                beginAtZero: true,
-                title: {
-                    display: true,
-                    text: 'Number of Commits',
-                },
+                type: 'linear',
+                position: 'left',
             },
         },
         plugins: {
             title: {
                 display: true,
-                text: 'Commits Per Day and Total Commits',
+                text: 'Total Number of Commits',
                 font: {
                     size: 16,
                 },
@@ -162,7 +132,7 @@ function displayCommitChart(commitData) {
                 anchor: 'end',
                 align: 'top',
                 formatter: function (value, context) {
-                    return value;
+                    return value; // Menampilkan nilai sebagai label
                 },
             },
         },
