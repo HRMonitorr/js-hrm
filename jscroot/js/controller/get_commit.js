@@ -36,7 +36,7 @@ document.getElementById('commitLifetimeForm').addEventListener('submit', async (
 
         if (data.status === 200) {
             displayCommitData(data.data);
-            displayCommitChart(data.data); // New line to display chart
+            displayCommitChart(data.data);
             await Swal.fire({
                 icon: 'success',
                 title: 'Success',
@@ -60,10 +60,9 @@ document.getElementById('commitLifetimeForm').addEventListener('submit', async (
 });
 
 function groupCommitsByDay(commitData) {
-    // Group commits by day and count the number of commits for each day
     const commitCounts = {};
     commitData.forEach(commit => {
-        const date = commit.date.split('T')[0]; // Extract the date part
+        const date = commit.date.split('T')[0];
         commitCounts[date] = (commitCounts[date] || 0) + 1;
     });
     return commitCounts;
@@ -100,10 +99,7 @@ function displayCommitData(commitData) {
 function displayCommitChart(commitData) {
     const ctx = document.getElementById('commitChart').getContext('2d');
 
-    // Group commits by day and count the number of commits for each day
     const commitCounts = groupCommitsByDay(commitData);
-
-    // Extract data for the chart
     const labels = Object.keys(commitCounts);
     const data = Object.values(commitCounts);
 
@@ -126,6 +122,15 @@ function displayCommitChart(commitData) {
             y: {
                 type: 'linear',
                 position: 'left',
+            },
+        },
+        plugins: {
+            title: {
+                display: true,
+                text: 'Number of Commits Per Day',
+                font: {
+                    size: 16,
+                },
             },
         },
     };
