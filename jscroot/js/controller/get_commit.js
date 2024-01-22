@@ -89,10 +89,14 @@ function displayCommitData(commitData) {
 
 function displayCommitChart(commitData) {
     const ctx = document.getElementById('commitChart').getContext('2d');
-    
+
     // Extract data for the chart
     const labels = commitData.map(commit => commit.date);
-    const data = commitData.map(commit => commit.commitsCount); // Replace with the actual property name
+    const data = commitData.map(commit => commit.commitsCount);
+
+    // Log the extracted data to the console for debugging
+    console.log('Labels:', labels);
+    console.log('Data:', data);
 
     const chartData = {
         labels: labels,
