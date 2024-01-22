@@ -112,6 +112,7 @@ function displayCommitChart(commitData) {
         datasets: [{
             label: 'Commits Per Day',
             borderColor: 'rgb(75, 192, 192)',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
             data: data,
         }],
     };
@@ -130,7 +131,7 @@ function displayCommitChart(commitData) {
     };
 
     new Chart(ctx, {
-        type: 'line',
+        type: 'bar',
         data: chartData,
         options: chartOptions,
     });
