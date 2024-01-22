@@ -132,6 +132,15 @@ function displayCommitChart(commitData) {
                     size: 16,
                 },
             },
+            datalabels: {
+                display: true,
+                color: 'black',
+                anchor: 'end',
+                align: 'top',
+                formatter: function (value, context) {
+                    return value; // Menampilkan nilai sebagai label
+                },
+            },
         },
     };
 
