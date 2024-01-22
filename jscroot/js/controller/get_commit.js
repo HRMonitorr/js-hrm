@@ -59,6 +59,16 @@ document.getElementById('commitLifetimeForm').addEventListener('submit', async (
     }
 });
 
+function groupCommitsByDate(commitData) {
+    // Group commits by date and count the number of commits for each day
+    const commitCounts = {};
+    commitData.forEach(commit => {
+        const date = commit.date.split('T')[0]; // Extract the date part
+        commitCounts[date] = (commitCounts[date] || 0) + 1;
+    });
+    return commitCounts;
+}
+
 function displayCommitData(commitData) {
     const tableBody = document.getElementById('commitTableBody');
     tableBody.innerHTML = '';
@@ -90,18 +100,17 @@ function displayCommitData(commitData) {
 function displayCommitChart(commitData) {
     const ctx = document.getElementById('commitChart').getContext('2d');
 
-    // Extract data for the chart
-    const labels = commitData.map(commit => commit.date);
-    const data = commitData.map(commit => commit.commitsCount);
+    // Group commits by date and count the number of commits for each day
+    const commitCounts = groupCommitsByDate(commitData);
 
-    // Log the extracted data to the console for debugging
-    console.log('Labels:', labels);
-    console.log('Data:', data);
+    // Extract data for the chart
+    const labels = Object.keys(commitCounts);
+    const data = Object.values(commitCounts);
 
     const chartData = {
         labels: labels,
         datasets: [{
-            label: 'Commit Data',
+            label: 'Commits Per Day',
             borderColor: 'rgb(75, 192, 192)',
             data: data,
         }],
