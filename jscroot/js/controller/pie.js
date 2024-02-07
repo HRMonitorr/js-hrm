@@ -10,7 +10,6 @@ function getTokenFromCookies(cookieName) {
   }
   
   var employeeLabel = [], employeeSalaryData = [], empHonorDivision = [];
-  
   async function dummyPieChart() {
     await getDummyData();
   
